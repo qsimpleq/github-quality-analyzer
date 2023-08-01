@@ -1,0 +1,35 @@
+require:
+  - rubocop-capybara
+  - rubocop-minitest
+  - rubocop-performance
+  - rubocop-rails
+  - rubocop-rake
+  - rubocop-slim
+
+AllCops:
+  NewCops: enable
+  TargetRubyVersion: 3.2
+  Exclude:
+    - 'bin/{bundle,dev,rails,rake,setup}'
+    - 'db/schema.rb'
+    - 'lib/templates/slim/scaffold/**/*'
+    - 'script/**/*'
+
+Layout/LineLength:
+  Max: 120
+  AllowedPatterns:
+    - '\s*# .+'
+Metrics/AbcSize:
+  Enabled: false
+Metrics/BlockLength:
+  Enabled: false
+Metrics/MethodLength:
+  Enabled: false
+Rails/UniqueValidationWithoutIndex:
+  Enabled: false
+Style/AsciiComments:
+  Enabled: false
+Style/Documentation:
+  Enabled: false
+Style/MethodCallWithArgsParentheses:
+  EnforcedStyle: require_parentheses
