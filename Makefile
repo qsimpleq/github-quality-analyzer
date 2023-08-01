@@ -56,4 +56,4 @@ deploy-dokku: git-precommit-check
 
 deploy: git-precommit-check
 	git push origin main
-	#git push dokku main
+	git push dokku main

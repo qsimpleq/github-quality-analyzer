@@ -11,7 +11,7 @@ AllCops:
   TargetRubyVersion: 3.2
   Exclude:
     - 'bin/{bundle,dev,rails,rake,setup}'
-#    - 'db/schema.rb'
+    - 'db/schema.rb'
     - 'lib/templates/slim/scaffold/**/*'
     - 'script/**/*'
 
