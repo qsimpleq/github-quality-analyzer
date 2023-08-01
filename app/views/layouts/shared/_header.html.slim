@@ -1,0 +1,22 @@
+.container.mb-2
+  .d-flex.flex-wrap.align-items-center.py-2.border-bottom
+    .navbar.navbar-expand-md.navbar-light.me-auto
+      a.navbar-brand.me-md-4 href = root_path
+        = image_tag('hexlet_logo.jpg', width: 30)
+      .collapse.navbar-collapse[id="navbarToggler"]
+        ul.nav.nav-pills.flex-grow-1.navbar-nav.me-auto
+          li.nav-item.me-2 = link_to t('.home'), root_path, class: 'nav-link text-dark'
+      /     - if signed_in?
+      /       li.nav-item.me-2 = link_to t('.my_bulletins'), profile_path, class: 'nav-link'
+      /       li.nav-item.me-2 = link_to t('action.add'), new_bulletin_path, class: 'nav-link'
+    / ul.nav.nav-pills
+      / - if signed_in?
+      /   - if current_user.admin?
+      /     li.nav-item.me-2 = link_to t('.admin'), admin_path, class: 'nav-link'
+      /   li.nav-item.me-2
+      /     = button_to t('action.log_out'), auth_logout_path, method: :delete, class: 'nav-link', data: { turbo: 'false' }
+      / - else
+      /   li.nav-item.me-2
+      /     = button_to auth_request_path(:github), method: :post, class: 'nav-link', data: { turbo: 'false' } do
+      /       span.bi.bi-github.me-2
+      /       = t('action.log_in')

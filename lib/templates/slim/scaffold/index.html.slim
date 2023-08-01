@@ -1,0 +1,12 @@
+p style="color: green" = notice
+
+h1.h2.mb-4 = t('.title')
+
+= link_to t('.link_new'), <%= new_helper(type: :path) %>
+
+hr
+
+#<%= plural_table_name %>
+  - @<%= plural_table_name %>.each do |<%= singular_table_name %>|
+    == render <%= singular_table_name %>
+    == render 'shared/navigate', locals: { <%= singular_table_name %>: }

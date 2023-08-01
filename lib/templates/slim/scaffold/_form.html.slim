@@ -4,8 +4,8 @@
 
   .form-inputs
 <%- attributes.each do |attribute| -%>
-    = f.<%= attribute.reference? ? :association : :input %> :<%= attribute.name %>
+  = f.<%= attribute.reference? ? :association : :input %> :<%= attribute.name %>
 <%- end -%>
 
   .form-actions
-    = f.button :submit
+    = f.button :submit, class: "btn-#{action_to_css_class_color}"
