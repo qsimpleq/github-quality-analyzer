@@ -2,7 +2,7 @@
 
 ru:
   action:
-    sign_in: Войти с помощью
+    sign_in: Войти с помощью Github
     sign_out: Выйти
   app_name: Анализатор качества репозиториев
   layouts:
@@ -13,6 +13,9 @@ ru:
   pundit:
     default: Вы должны быть авторизованы
   web:
+    auth:
+      sign_in: Вы успешно вошли
+      sign_out: Вы вышли из системы
     home:
       show:
         hello: Привет от Хекслета!

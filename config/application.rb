@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'boot'
-
+require 'dotenv/load' if %w[development test].include? ENV['RAILS_ENV']
 require 'rails/all'
 
 # Require the gems listed in Gemfile, including any gems
@@ -15,7 +15,9 @@ module RailsProject66
     config.i18n.default_locale = :ru
 
     # Configuration for the application, engines, and railties goes here.
-    #
+    config.after_initialize do
+      ActionDispatch::Flash::FlashHash.include(FlashDecorator)
+    end
     # These settings can be overridden in specific environments using the files
     # in config/environments, which are processed later.
     #
