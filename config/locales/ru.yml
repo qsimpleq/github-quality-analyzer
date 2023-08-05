@@ -9,7 +9,7 @@ ru:
     shared:
       header:
         home: Главная
-        repos: Репозитории
+        repositories: Репозитории
   pundit:
     default: Вы должны быть авторизованы
   web:

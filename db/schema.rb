@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_01_143709) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_05_104307) do
+  create_table "repositories", force: :cascade do |t|
+    t.string "name"
+    t.string "language"
+    t.datetime "repo_created_at"
+    t.datetime "repo_updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email"
     t.string "nickname"

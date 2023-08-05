@@ -8,5 +8,7 @@ Rails.application.routes.draw do
     delete 'auth/logout', to: 'auth#destroy'
 
     root 'home#show'
+
+    resources :repositories, only: %i[index new create show]
   end
 end

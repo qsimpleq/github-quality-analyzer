@@ -6,8 +6,8 @@
       .collapse.navbar-collapse[id="navbarToggler"]
         ul.nav.nav-pills.flex-grow-1.navbar-nav.me-auto
           li.nav-item.me-2 = link_to t('.home'), root_path, class: 'nav-link text-dark'
-          / - if signed_in?
-          /   li.nav-item.me-2 = link_to t('.repositories'), repositories_path, class: 'nav-link text-dark'
+          - if signed_in?
+            li.nav-item.me-2 = link_to t('.repositories'), repositories_path, class: 'nav-link text-dark'
     ul.nav.nav-pills
       - if signed_in?
         li.nav-item.me-2
