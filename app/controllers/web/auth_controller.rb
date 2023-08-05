@@ -5,11 +5,17 @@ module Web
     def callback
       auth = request.env['omniauth.auth']
       auth_params = build_auth_params(auth)
-      user = User.create_with(nickname: auth_params[:nickname], token: auth_params[:token])
-                 .find_or_create_by(email: auth_params[:email])
-      session[:user_id] = user.id
 
-      redirect_to root_path, notice: t('.sign_in')
+      user = User.find_or_initialize_by(email: auth_params[:email])
+      user.nickname = auth_params[:nickname]
+      user.token = auth_params[:token]
+
+      if user.save
+        sign_in user
+        redirect_to root_path, notice: t('.sign_in')
+      else
+        redirect_to root_path, alert: "#{t('.error')}: #{user.errors.full_messages.join(', ')}"
+      end
     end
 
     def destroy

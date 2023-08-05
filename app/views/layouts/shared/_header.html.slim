@@ -11,6 +11,8 @@
     ul.nav.nav-pills
       - if signed_in?
         li.nav-item.me-2
+          span.nav-link.text-secondary = current_user.email
+        li.nav-item.me-2
           = button_to t('action.sign_out'), auth_logout_path, method: :delete, class: 'nav-link text-dark', data: { turbo: 'false' }
       - else
         li.nav-item.me-2
