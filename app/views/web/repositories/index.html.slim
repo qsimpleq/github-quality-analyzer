@@ -1,2 +1,12 @@
-h1 Web::Repositories#index
-p Find me in app/views/web/repositories/index.html.slim
+.mb-4.mt-4
+  = link_to t('.add'), new_repository_path, class: 'btn btn-primary'
+  table.table.table-striped.table-hover.mt-4
+    thead
+      th[scope="col"] = t('.name')
+      th[scope="col"] = t('.language')
+      th[scope="col"] = t('.last_check_status')
+    tbody
+      - @repositories.each do |repository|
+        td = link_to repository.name, repository_path(repository)
+        td = repository.language
+        td = false

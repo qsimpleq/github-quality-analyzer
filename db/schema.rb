@@ -12,12 +12,18 @@
 
 ActiveRecord::Schema[7.0].define(version: 2023_08_05_104307) do
   create_table "repositories", force: :cascade do |t|
+    t.string "repository_github_id"
     t.string "name"
     t.string "language"
     t.datetime "repo_created_at"
     t.datetime "repo_updated_at"
+    t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["language"], name: "index_repositories_on_language"
+    t.index ["name"], name: "index_repositories_on_name"
+    t.index ["repository_github_id"], name: "index_repositories_on_repository_github_id"
+    t.index ["user_id"], name: "index_repositories_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|

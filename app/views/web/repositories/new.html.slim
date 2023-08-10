@@ -1,2 +1,10 @@
-h1 Web::Repositories#new
-p Find me in app/views/web/repositories/new.html.slim
+.mb-4.mt-4
+  = simple_form_for(@repository) do |f|
+    = f.error_notification
+    = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
+
+    = f.input :repository_github_id, as: :select,
+            label: 'Github',
+            required: true,
+            collection: @repositories.sort { _1[:full_name] <=> _2[:full_name] }.map { [_1.full_name, _1.id] }
+    = f.button :submit, class: 'btn-success'

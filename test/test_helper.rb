@@ -8,8 +8,26 @@ end
 
 require_relative '../config/environment'
 require 'rails/test_help'
+require 'webmock/minitest'
 
 OmniAuth.config.test_mode = true
+
+def fixture_json_load(*, **opts)
+  JSON.parse(fixture_file_read(*), opts)
+end
+
+def fixture_file_read(*)
+  File.read(File.join(fixtures_path, *))
+end
+
+# ActiveRecord/Tasks/DatabaseTasks implementation
+def fixtures_path
+  @fixtures_path ||= if ENV['FIXTURES_PATH']
+                       Rails.root.join(ENV['FIXTURES_PATH']).to_s
+                     else
+                       Rails.root.join('test/fixtures').to_s
+                     end
+end
 
 module ActiveSupport
   class TestCase
@@ -29,12 +47,15 @@ module ActionDispatch
 
     def sign_in(user, _options = {})
       auth_hash = {
-        provider: 'github',
-        uid: '12345',
+        credentials: {
+          token: '123'
+        },
         info: {
           email: user.email,
-          name: user.name
-        }
+          nickname: user.nickname
+        },
+        provider: 'github',
+        uid: '12345'
       }
 
       OmniAuth.config.mock_auth[:github] = OmniAuth::AuthHash::InfoHash.new(auth_hash)

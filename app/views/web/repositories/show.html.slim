@@ -1,2 +1,16 @@
-h1 Web::Repositories#show
-p Find me in app/views/web/repositories/show.html.slim
+.mb-4
+  h1 = "#{current_user.nickname}/#{@repository.name}"
+= link_to t('.check'), '/checks', class: 'btn btn-primary mb-4'
+p
+  strong.me-2 = t('.name')
+  = "#{current_user.nickname}/#{@repository.name}"
+p
+  strong.me-2 = t('.language')
+  = @repository.language
+p
+  strong.me-2 = t('.created_at')
+  = I18n.l(@repository.created_at, format: :default)
+p
+  strong.me-2 = t('.updated_at')
+  = I18n.l(@repository.updated_at, format: :default)
+
