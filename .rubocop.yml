@@ -25,11 +25,18 @@ Metrics/BlockLength:
   Enabled: false
 Metrics/MethodLength:
   Enabled: false
+Minitest/EmptyLineBeforeAssertionMethods:
+  Enabled: false
 Rails/UniqueValidationWithoutIndex:
   Enabled: false
+Rake/Desc:
+  Exclude:
+    - 'lib/tasks/**/*'
 Style/AsciiComments:
   Enabled: false
 Style/Documentation:
   Enabled: false
 Style/MethodCallWithArgsParentheses:
   EnforcedStyle: require_parentheses
+Style/NumberedParametersLimit:
+  Enabled: false
