@@ -7,6 +7,7 @@ require 'rails/all'
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
+autoload :ApplicationContainer, './app/lib/application_container'
 
 module RailsProject66
   class Application < Rails::Application

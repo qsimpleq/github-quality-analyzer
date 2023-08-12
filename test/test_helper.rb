@@ -29,6 +29,20 @@ def fixtures_path
                      end
 end
 
+def mock_omniauth(user, _options = {})
+  auth_hash = {
+    credentials: {
+      token: '123'
+    },
+    info: {
+      email: user.email,
+      nickname: user.nickname
+    }
+  }
+
+  OmniAuth.config.mock_auth[:github] = OmniAuth::AuthHash::InfoHash.new(auth_hash)
+end
+
 module ActiveSupport
   class TestCase
     # Run tests in parallel with specified workers
@@ -45,21 +59,8 @@ module ActionDispatch
   class IntegrationTest
     include AuthManager
 
-    def sign_in(user, _options = {})
-      auth_hash = {
-        credentials: {
-          token: '123'
-        },
-        info: {
-          email: user.email,
-          nickname: user.nickname
-        },
-        provider: 'github',
-        uid: '12345'
-      }
-
-      OmniAuth.config.mock_auth[:github] = OmniAuth::AuthHash::InfoHash.new(auth_hash)
-
+    def sign_in(user, options = {})
+      mock_omniauth(user, options)
       get callback_auth_url('github')
     end
   end

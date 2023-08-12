@@ -26,6 +26,7 @@ gem 'ancestry' # Ancestry allows rails ActiveRecord models to be organized as a 
 gem 'bootsnap', require: false # Reduces boot times through caching; required in config/boot.rb
 gem 'bootstrap'
 gem 'cocoon'
+gem 'dry-container'
 gem 'enumerize' # Enumerated attributes with I18n and ActiveRecord/Mongoid/MongoMapper/Sequel support
 gem 'faker'
 gem 'faraday-retry'
