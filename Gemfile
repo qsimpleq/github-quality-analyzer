@@ -18,7 +18,6 @@ gem 'turbo-rails' # Hotwire's SPA-like page accelerator [https://turbo.hotwired.
 
 # gem "bcrypt", "~> 3.1.7" # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 # gem "kredis" # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
-# gem "redis", "~> 4.0" # Use Redis adapter to run Action Cable in production
 # gem "sassc-rails" # Use Sass to process CSS
 gem 'aasm'
 gem 'active_storage_validations'
@@ -26,6 +25,7 @@ gem 'ancestry' # Ancestry allows rails ActiveRecord models to be organized as a 
 gem 'bootsnap', require: false # Reduces boot times through caching; required in config/boot.rb
 gem 'bootstrap'
 gem 'cocoon'
+gem 'connection_pool'
 gem 'dry-container'
 gem 'enumerize' # Enumerated attributes with I18n and ActiveRecord/Mongoid/MongoMapper/Sequel support
 gem 'faker'
@@ -46,11 +46,13 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby] # Windows does not
 
 group :production do
   gem 'pg'
+  gem 'redis', '~> 4.0' # Use Redis adapter to run Action Cable in production
 end
 
 group :development, :test do
   gem 'annotate' # Adds model attributes/routes to top of model files/routes file
   gem 'debug', platforms: %i[mri mingw x64_mingw] # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
+  gem 'fakeredis'
   gem 'html2slim', github: 'slim-template/html2slim'
   gem 'i18n-tasks', require: false
   gem 'rubocop-capybara', require: false

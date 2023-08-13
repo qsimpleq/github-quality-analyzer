@@ -3,6 +3,7 @@
 module Web
   class ApplicationController < ApplicationController
     include AuthManager
+    include AnyClients
     include Pundit::Authorization
     rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 

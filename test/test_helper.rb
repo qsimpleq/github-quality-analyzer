@@ -8,6 +8,7 @@ end
 
 require_relative '../config/environment'
 require 'rails/test_help'
+require 'fakeredis/minitest'
 require 'webmock/minitest'
 
 OmniAuth.config.test_mode = true

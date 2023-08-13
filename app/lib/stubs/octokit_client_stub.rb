@@ -2,26 +2,38 @@
 
 module Stubs
   class OctokitClientStub
-    attr_reader :octokit_search_repositories
+    attr_reader :octokit_search_repositories, :last_response
 
     OCTOKIT_SEARCH_REPOSITORY_PATH = Rails.root.join('test/fixtures/files/octokit_search_repositories.json')
 
-    def initialize(*); end
+    def initialize(*)
+      @last_response = nil
+    end
 
     def repos
-      load_json_fixture(OCTOKIT_SEARCH_REPOSITORY_PATH)[:items]
+      result = load_json_fixture(OCTOKIT_SEARCH_REPOSITORY_PATH)[:items]
+      set_last_response(result)
     end
 
     def repo(github_id)
-      load_json_fixture(OCTOKIT_SEARCH_REPOSITORY_PATH)[:items].find { _1[:id] == github_id }
+      result = load_json_fixture(OCTOKIT_SEARCH_REPOSITORY_PATH)[:items].find { _1[:id] == github_id }
+      set_last_response(result)
     end
 
     def search_repos(query, _options = {})
       language_filter_array = query.scan(/language:(\w+)/)&.flatten || []
       result = load_json_fixture(OCTOKIT_SEARCH_REPOSITORY_PATH)
       result[:items].select { language_filter_array.include?(_1[:language]&.downcase) }
-      result
+      set_last_response(result)
     end
+
+    # rubocop:disable Naming/AccessorMethodName
+    def set_last_response(result)
+      @last_response = result
+      @last_response.define_singleton_method(:body) { ActiveSupport::JSON.encode(result) }
+      @last_response
+    end
+    # rubocop:enable Naming/AccessorMethodName
 
     private
 

@@ -117,6 +117,7 @@ GEM
       xpath (~> 3.2)
     cocoon (1.2.15)
     concurrent-ruby (1.2.2)
+    connection_pool (2.4.1)
     crack (0.4.5)
       rexml
     crass (1.0.6)
@@ -139,6 +140,8 @@ GEM
     execjs (2.8.1)
     faker (3.2.0)
       i18n (>= 1.8.11, < 2)
+    fakeredis (0.9.2)
+      redis (~> 4.8)
     faraday (2.7.10)
       faraday-net_http (>= 2.0, < 3.1)
       ruby2_keywords (>= 0.0.4)
@@ -300,6 +303,7 @@ GEM
       activerecord (>= 6.1.5)
       activesupport (>= 6.1.5)
       i18n
+    redis (4.8.1)
     regexp_parser (2.8.1)
     reline (0.3.7)
       io-console (~> 0.5)
@@ -443,12 +447,14 @@ DEPENDENCIES
   bootstrap
   capybara
   cocoon
+  connection_pool
   cssbundling-rails
   debug
   dotenv-rails
   dry-container
   enumerize
   faker
+  fakeredis
   faraday-retry
   html2slim!
   i18n-tasks
@@ -466,6 +472,7 @@ DEPENDENCIES
   pundit
   rails (~> 7.0.6)
   ransack
+  redis (~> 4.0)
   rubocop-capybara
   rubocop-minitest
   rubocop-performance

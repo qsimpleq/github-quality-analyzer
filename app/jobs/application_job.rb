@@ -6,4 +6,9 @@ class ApplicationJob < ActiveJob::Base
 
   # Most jobs are safe to ignore if the underlying records are no longer available
   # discard_on ActiveJob::DeserializationError
+  include AnyClients
+
+  def current_user(user = nil)
+    @current_user ||= user
+  end
 end

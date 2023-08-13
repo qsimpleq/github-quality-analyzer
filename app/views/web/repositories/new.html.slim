@@ -6,6 +6,6 @@
     = f.input :github_id, as: :select,
             label: 'Github',
             required: true,
-            collection: @repositories.sort { |a,b| a[:full_name] <=> b[:full_name] } \
-                                     .map { [_1[:full_name], _1[:id]] }
+            collection: @available_repositories.sort_by { |a| a[:full_name] } \
+                                               .map { [_1[:full_name], _1[:id]] }
     = f.button :submit, class: 'btn-success'
