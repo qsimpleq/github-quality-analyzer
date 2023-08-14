@@ -5,8 +5,8 @@ require 'test_helper'
 module Web
   class RepositoriesControllerTest < ActionDispatch::IntegrationTest
     setup do
-      @repo_one = repositories(:one)
-      @user_one = users(:one)
+      @repo_one = repositories(:repo1)
+      @user_one = users(:user1)
       sign_in(@user_one)
     end
 

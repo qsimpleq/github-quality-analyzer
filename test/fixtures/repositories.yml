@@ -20,18 +20,12 @@
 #  index_repositories_on_user_id    (user_id)
 #
 
-one:
-  user: one
-  name: one
-  language: ruby
-  github_id: 1
-  repo_created_at: 2023-08-05 15:40:07
-  repo_updated_at: 2023-08-05 15:43:07
-
-two:
-  user: two
-  name: two
-  language: javascript
-  github_id: 2
-  repo_created_at: 2023-08-05 15:41:07
-  repo_updated_at: 2023-08-05 15:45:07
+<% (1..10).each do |num| %>
+repo<%= num %>:
+  user: user1
+  name: &LABEL
+  language: <%= num.odd? ? 'ruby' : 'javascript' %>
+  github_id: <%= num %>
+  repo_created_at: <%= Faker::Time.between(from: 2.years.ago, to: 1.year.ago, format: :default) %>
+  repo_updated_at: <%= Faker::Time.between(from: 1.year.ago, to: Time.current, format: :default) %>
+<% end %>

@@ -13,10 +13,9 @@
 #
 #  index_users_on_email  (email) UNIQUE
 #
-one:
-  nickname: one
-  email: one@example.com
 
-two:
-  nickname: two
-  email: two@example.com
+<% (1..2).each do |num| %>
+user<%= num %>:
+  nickname: &LABEL
+  email: user<%= num %>@example.com
+<% end %>

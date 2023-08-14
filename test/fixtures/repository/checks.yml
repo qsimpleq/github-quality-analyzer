@@ -1,0 +1,27 @@
+# == Schema Information
+#
+# Table name: repository_checks
+#
+#  id            :integer          not null, primary key
+#  state         :string           default("created"), not null
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  repository_id :integer          not null
+#
+# Indexes
+#
+#  index_repository_checks_on_repository_id  (repository_id)
+#  index_repository_checks_on_state          (state)
+#
+# Foreign Keys
+#
+#  repository_id  (repository_id => repositories.id)
+#
+
+<% states = %i[created fetching fetched checking checked finished failed] %>
+
+<% states.each_with_index do |state, index| %>
+check<%= index + 1 %>:
+  repository: repo<%= index + 1 %>
+  state: <%= state %>
+<% end %>

@@ -3,7 +3,7 @@
 module Web
   class AuthControllerTest < ActionDispatch::IntegrationTest
     setup do
-      @user_one = users(:one)
+      @user_one = users(:user1)
     end
 
     test 'should github auth' do
