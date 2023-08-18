@@ -6,8 +6,8 @@ module Web
   class RepositoriesControllerTest < ActionDispatch::IntegrationTest
     setup do
       @repo_one = repositories(:repo1)
-      @user_one = users(:user1)
-      sign_in(@user_one)
+      @user1 = users(:user1)
+      sign_in(@user1)
     end
 
     test '#index' do

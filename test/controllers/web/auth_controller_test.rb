@@ -3,7 +3,7 @@
 module Web
   class AuthControllerTest < ActionDispatch::IntegrationTest
     setup do
-      @user_one = users(:user1)
+      @user1 = users(:user1)
     end
 
     test 'should github auth' do
@@ -15,8 +15,8 @@ module Web
     test 'create' do
       auth_hash = {
         info: {
-          email: @user_one.email,
-          nickname: @user_one.nickname
+          email: @user1.email,
+          nickname: @user1.nickname
         },
         credentials: {
           token: 'fake'
@@ -32,7 +32,7 @@ module Web
       user = User.find_by!(email: auth_hash[:info][:email].downcase)
 
       assert user
-      assert_predicate self, :signed_in?
+      assert { signed_in? }
     end
 
     test 'should destroy' do

@@ -11,19 +11,19 @@ module Stubs
     end
 
     def repos
-      result = load_json_fixture(OCTOKIT_SEARCH_REPOSITORY_PATH)[:items]
+      result = load_json_fixture(OCTOKIT_SEARCH_REPOSITORY_PATH)
       set_last_response(result)
     end
 
     def repo(github_id)
-      result = load_json_fixture(OCTOKIT_SEARCH_REPOSITORY_PATH)[:items].find { _1[:id] == github_id }
+      result = load_json_fixture(OCTOKIT_SEARCH_REPOSITORY_PATH).find { _1[:id] == github_id }
       set_last_response(result)
     end
 
     def search_repos(query, _options = {})
       language_filter_array = query.scan(/language:(\w+)/)&.flatten || []
       result = load_json_fixture(OCTOKIT_SEARCH_REPOSITORY_PATH)
-      result[:items].select { language_filter_array.include?(_1[:language]&.downcase) }
+      result.select { language_filter_array.include?(_1[:language]&.downcase) }
       set_last_response(result)
     end
 
