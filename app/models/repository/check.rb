@@ -55,7 +55,7 @@ class Repository
       end
 
       event :failed do
-        transitions from: :checked, to: :failed
+        transitions from: %i[fetching checking checked], to: :failed
       end
     end
   end

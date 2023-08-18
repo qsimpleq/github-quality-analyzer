@@ -13,7 +13,9 @@ AllCops:
     - 'bin/{bundle,dev,rails,rake,setup}'
     - 'db/schema.rb'
     - 'lib/templates/slim/scaffold/**/*'
+    - 'node_modules/**/*'
     - 'script/**/*'
+    - 'tmp/**/*'
 
 Layout/LineLength:
   Max: 120

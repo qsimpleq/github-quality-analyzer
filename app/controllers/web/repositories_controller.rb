@@ -31,6 +31,12 @@ module Web
       end
     end
 
+    def check
+      @repository = current_user.repositories.find(params[:id])
+      RepositoryCheckJob.perform_later(repository: @repository, user: current_user)
+      redirect_to repository_path(params[:id]), notice: t('.check_started')
+    end
+
     private
 
     def repository_params

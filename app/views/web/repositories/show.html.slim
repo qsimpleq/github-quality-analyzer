@@ -1,6 +1,6 @@
 .mb-4
   h1 = "#{current_user.nickname}/#{@repository.name}"
-= link_to t('.check'), '/checks', class: 'btn btn-primary mb-4'
+= link_to t('.check'), check_repository_path, class: 'btn btn-primary mb-4', data: { turbo_method: :patch }
 p
   strong.me-2 = t('.name')
   = "#{current_user.nickname}/#{@repository.name}"

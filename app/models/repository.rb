@@ -31,4 +31,12 @@ class Repository < ApplicationRecord
   enumerize :language,
             default: :javascript,
             in: %i[javascript ruby]
+
+  def user_directory
+    Rails.root.join("tmp/repositories/#{user.nickname}")
+  end
+
+  def directory
+    Rails.root.join("#{user_directory}/#{name}")
+  end
 end

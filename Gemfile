@@ -30,6 +30,7 @@ gem 'dry-container'
 gem 'enumerize' # Enumerated attributes with I18n and ActiveRecord/Mongoid/MongoMapper/Sequel support
 gem 'faker'
 gem 'faraday-retry'
+gem 'git'
 gem 'image_processing', '~> 1.2' # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 gem 'kaminari' # A pagination engine plugin for Rails 4+ and other modern frameworks
 gem 'octokit' # Ruby toolkit for the GitHub API

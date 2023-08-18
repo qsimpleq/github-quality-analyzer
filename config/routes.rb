@@ -9,6 +9,10 @@ Rails.application.routes.draw do
 
     root 'home#show'
 
-    resources :repositories, only: %i[index new create show]
+    resources :repositories, only: %i[index new create show] do
+      member do
+        patch :check
+      end
+    end
   end
 end
