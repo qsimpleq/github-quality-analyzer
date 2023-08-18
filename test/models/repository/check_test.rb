@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: repository_checks
@@ -17,11 +19,12 @@
 #
 #  repository_id  (repository_id => repositories.id)
 #
+require 'test_helper'
 
-<% states = %i[created fetching fetched checking checked finished failed] %>
-
-<% states.each_with_index do |state, index| %>
-<%= state %>:
-  repository: repo<%= index + 1 %>
-  state: <%= state %>
-<% end %>
+class Repository
+  class CheckTest < ActiveSupport::TestCase
+    # test "the truth" do
+    #   assert true
+    # end
+  end
+end

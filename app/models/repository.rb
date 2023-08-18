@@ -24,6 +24,8 @@
 class Repository < ApplicationRecord
   extend Enumerize
   belongs_to :user, inverse_of: :repositories
+  has_many :checks, dependent: :destroy
+
   validates :github_id, presence: true
 
   enumerize :language,
