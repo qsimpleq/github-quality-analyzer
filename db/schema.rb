@@ -28,7 +28,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_14_071345) do
 
   create_table "repository_checks", force: :cascade do |t|
     t.integer "repository_id", null: false
+    t.boolean "check_passed", default: false
     t.string "state", default: "created", null: false
+    t.string "commit_id"
+    t.integer "offense_count"
+    t.json "check_result"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["repository_id"], name: "index_repository_checks_on_repository_id"

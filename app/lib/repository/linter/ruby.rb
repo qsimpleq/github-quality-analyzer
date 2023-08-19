@@ -3,11 +3,7 @@
 class Repository
   class Linter
     class Ruby
-      attr_accessor :repository,
-                    :result,
-                    :stdout,
-                    :stderr,
-                    :status
+      attr_reader :repository, :result
 
       def initialize(repository)
         @repository = repository
@@ -17,19 +13,31 @@ class Repository
         lint_options = [
           select_config,
           '--safe',
-          '--lint',
           '--ignore-unrecognized-cops',
-          '--force-default-config',
           "--format json #{@repository.directory}"
         ]
 
         command = "bundle exec rubocop #{lint_options.join(' ')}"
+
       ensure
-        begin
-          @stdout, @stderr, @status = Open3.capture3(command)
-          JSON.parse(@stdout, symbolize_names: true)
-        rescue StandardError
-          { status: @status, error: @stderr }
+        stdout, _stderr, status = Open3.capture3(command)
+        @result = { status:, result: JSON.parse(stdout, symbolize_names: true) }
+        self
+      end
+
+      def parse
+        return [] if @result[:result][:summary][:offense_count].zero?
+
+        @result[:result][:files].reject { _1[:offenses].empty? }.map do |file|
+          offenses = file[:offenses].map do |offence|
+            {
+              message: offence[:message],
+              name: offence[:cop_name],
+              line: offence[:location][:line],
+              column: offence[:location][:column]
+            }
+          end
+          { path: file[:path], offenses: }
         end
       end
 

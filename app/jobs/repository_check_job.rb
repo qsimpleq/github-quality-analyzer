@@ -11,40 +11,39 @@ class RepositoryCheckJob < ApplicationJob
     @repository = @params[:repository]
     @check = Repository::Check.create(repository: @repository)
 
-    repo_info
-      &.fetch
-      &.lint or return false
+    unless repo_info&.fetch&.lint
+      @check.failed!
+      return false
+    end
 
     @check.finish!
   end
 
   def repo_info
     @github_info = octokit.repo(@params[:repository].github_id)
-    if @github_info.nil?
-      @check.failed!
-      nil
-    else
-      self
-    end
+    return if @github_info.nil?
+
+    self
   end
 
   def fetch
     FileUtils.mkdir_p(@repository.user_directory)
 
-    @check.fetch
+    @check.fetch!
     begin
       if Dir.exist?(@repository.directory)
         Dir.chdir(@repository.directory)
-        git = Git.open(@repository.directory)
-        git.pull
+        Git.open(@repository.directory).pull
       else
         Dir.chdir(@repository.user_directory)
         Git.clone(@github_info[:clone_url], nil, depth: 1)
       end
-      @check.is_fetched!
+      git = Git.open(@repository.directory)
+      @check.commit_id = git.log.first.sha[0, 8]
+      @check.is_fetched
+      @check.save
       self
     rescue Git::FailedError
-      @check.failed!
       nil
     end
   end
@@ -52,11 +51,14 @@ class RepositoryCheckJob < ApplicationJob
   def lint
     @check.check!
     linter = Repository::Linter.new(@repository)
-    linter.run
+    result = linter.run.result
+    offenses = linter.parse
     @check.is_checked!
+
+    @check.offense_count = result[:result][:summary][:offense_count]
+    @check.check_result = JSON.generate(offenses)
+    @check.check_passed = true if result[:status] == 0 && @check.offense_count.zero?
+    @check.save
     self
-  rescue Git::FailedError
-    @check.failed!
-    nil
   end
 end
