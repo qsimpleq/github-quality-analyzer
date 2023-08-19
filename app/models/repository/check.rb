@@ -33,8 +33,10 @@ class Repository
       state :created, initial: true
       state :fetching,
             :fetched,
-            :checking,
-            :checked,
+            :linting,
+            :linted,
+            :parsing,
+            :parsed,
             :finished,
             :failed
 
@@ -46,20 +48,28 @@ class Repository
         transitions from: :fetching, to: :fetched
       end
 
-      event :check do
-        transitions from: :fetched, to: :checking
+      event :lint do
+        transitions from: :fetched, to: :linting
       end
 
-      event :is_checked do
-        transitions from: :checking, to: :checked
+      event :is_linted do
+        transitions from: :linting, to: :linted
+      end
+
+      event :parse do
+        transitions from: :linted, to: :parsing
+      end
+
+      event :is_parsed do
+        transitions from: :parsing, to: :parsed
       end
 
       event :finish do
-        transitions from: :checked, to: :finished
+        transitions from: :parsed, to: :finished
       end
 
       event :failed do
-        transitions from: %i[fetching checking checked], to: :failed
+        transitions from: %i[fetching linting checked parsing parsed], to: :failed
       end
     end
   end

@@ -3,7 +3,7 @@
 class RepositoryCheckJob < ApplicationJob
   queue_as :default
 
-  attr_reader :repository, :check, :github_info, :params
+  attr_reader :repository, :check, :linter, :github_info, :params
 
   def perform(params)
     @params = params
@@ -11,10 +11,9 @@ class RepositoryCheckJob < ApplicationJob
     @repository = @params[:repository]
     @check = Repository::Check.create(repository: @repository)
 
-    unless repo_info&.fetch&.lint
-      @check.failed!
-      return false
-    end
+    (@check.fetch! and repo_info&.fetch and @check.is_fetched!) or return failed
+    (@check.lint! and lint and @check.is_linted!) or return failed
+    (@check.parse! and parse and @check.is_parsed!) or return failed
 
     @check.finish!
   end
@@ -29,7 +28,6 @@ class RepositoryCheckJob < ApplicationJob
   def fetch
     FileUtils.mkdir_p(@repository.user_directory)
 
-    @check.fetch!
     begin
       if Dir.exist?(@repository.directory)
         Dir.chdir(@repository.directory)
@@ -40,8 +38,7 @@ class RepositoryCheckJob < ApplicationJob
       end
       git = Git.open(@repository.directory)
       @check.commit_id = git.log.first.sha[0, 8]
-      @check.is_fetched
-      @check.save
+
       self
     rescue Git::FailedError
       nil
@@ -49,16 +46,23 @@ class RepositoryCheckJob < ApplicationJob
   end
 
   def lint
-    @check.check!
-    linter = Repository::Linter.new(@repository)
-    result = linter.run.result
-    offenses = linter.parse
-    @check.is_checked!
+    @linter = Repository::Linter.new(@repository)
+    result = @linter.run.result
+    return if result[:status] > 1
 
-    @check.offense_count = result[:result][:summary][:offense_count]
-    @check.check_result = JSON.generate(offenses)
-    @check.check_passed = true if result[:status] == 0 && @check.offense_count.zero?
-    @check.save
     self
+  end
+
+  def parse
+    offenses = @linter.parse
+    @check.offense_count = @linter.offense_count
+    @check.check_result = JSON.generate(offenses)
+    @check.check_passed = true if @check.offense_count.zero?
+    self
+  end
+
+  def failed
+    @check.failed!
+    false
   end
 end

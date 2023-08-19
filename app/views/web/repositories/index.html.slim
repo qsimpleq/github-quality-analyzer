@@ -10,4 +10,4 @@
         tr
           td = link_to repository.name, repository_path(repository)
           td = repository.language
-          td = false
+          td = repository.checks.last&.check_passed || false

@@ -4,7 +4,7 @@ require 'open3'
 
 class Repository
   class Linter
-    attr_reader :linter, :repository, :result
+    attr_reader :linter, :repository, :result, :offense_count
 
     def initialize(repository)
       @repository = repository
@@ -14,6 +14,7 @@ class Repository
     def run
       @linter.run
       @result = @linter.result
+      @offense_count = @linter.offense_count
       self
     end
 

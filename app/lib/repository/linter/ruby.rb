@@ -3,7 +3,7 @@
 class Repository
   class Linter
     class Ruby
-      attr_reader :repository, :result
+      attr_reader :repository, :result, :offense_count
 
       def initialize(repository)
         @repository = repository
@@ -21,7 +21,8 @@ class Repository
 
       ensure
         stdout, _stderr, status = Open3.capture3(command)
-        @result = { status:, result: JSON.parse(stdout, symbolize_names: true) }
+        @result = { status: status.exitstatus, result: JSON.parse(stdout, symbolize_names: true) }
+        @offense_count = @result[:result][:summary][:offense_count]
         self
       end
 
