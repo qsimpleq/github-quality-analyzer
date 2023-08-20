@@ -13,3 +13,22 @@ p
 p
   strong.me-2 = t('.updated_at')
   = I18n.l(@repository.updated_at, format: :default)
+
+hr
+
+- if @repository.checks.any?
+  table.table.table-striped
+    thead
+      th[scope="col"]
+      th[scope="col"] = t('.state')
+      th[scope="col"] = t('.commit_id')
+      th[scope="col"] = t('.check_passed')
+      th[scope="col"] = t('.created_at')
+    tbody
+      - @repository.checks.order(id: :desc).each do |check|
+        tr
+          td[scope="row"] = link_to check.id, repository_check_path(@repository.id, check.id)
+          td[scope="row"] = check.state
+          td[scope="row"] = link_to check.commit_id, "https://github.com/#{current_user.nickname}/#{@repository.name}/commit/#{check.commit_id}"
+          td[scope="row"] = check.check_passed
+          td[scope="row"] = I18n.l(check.created_at, format: :default)

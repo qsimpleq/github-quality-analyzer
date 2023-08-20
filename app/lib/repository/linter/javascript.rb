@@ -12,11 +12,10 @@ class Repository
       def run
         lint_options = [
           select_config,
-          '--format json',
-          @repository.directory
+          '--format json'
         ]
 
-        command = "yarn run eslint #{lint_options.join(' ')}"
+        command = "yarn run eslint #{lint_options.join(' ')} #{@repository.directory}"
       ensure
         stdout, _stderr, status = Open3.capture3(command)
         @json_result = stdout.split("\n")[2]
@@ -39,7 +38,7 @@ class Repository
               column: offence[:column]
             }
           end
-          { path: file[:filePath], offenses: }
+          { path: file[:filePath].delete_prefix("#{@repository.directory}/"), offenses: }
         end
       end
 

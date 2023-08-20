@@ -56,6 +56,7 @@ group :development, :test do
   gem 'fakeredis'
   gem 'html2slim', github: 'slim-template/html2slim'
   gem 'i18n-tasks', require: false
+  gem 'rubocop', require: false
   gem 'rubocop-capybara', require: false
   gem 'rubocop-minitest', require: false
   gem 'rubocop-performance', require: false

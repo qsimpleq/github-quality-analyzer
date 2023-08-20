@@ -10,12 +10,13 @@ class Repository
       end
 
       def run
+        Dir.chdir(@repository.directory)
+
         lint_options = [
-          select_config,
           '--safe',
           '--ignore-unrecognized-cops',
           '--format json',
-          @repository.directory
+          select_config
         ]
 
         command = "bundle exec rubocop #{lint_options.join(' ')}"
@@ -26,6 +27,7 @@ class Repository
           status: status.exitstatus,
           result: JSON.parse(@json_result, symbolize_names: true)
         }
+        Dir.chdir(Rails.root)
         self
       end
 
@@ -42,7 +44,7 @@ class Repository
               column: offence[:location][:column]
             }
           end
-          { path: file[:path], offenses: }
+          { path: file[:path].delete_prefix("#{@repository.directory}/"), offenses: }
         end
       end
 
@@ -50,11 +52,12 @@ class Repository
 
       def select_config
         repository_config = "#{@repository.directory}/.rubocop.yml"
-        if File.exist?(repository_config)
-          "--config #{repository_config}"
-        else
-          '--force-default-config'
+        unless File.exist?(repository_config)
+          default_config = "#{Gem::Specification.find_by_name('rubocop').gem_dir}/config/default.yml"
+          FileUtils.cp(default_config, repository_config)
         end
+
+        "--config #{repository_config}"
       end
     end
   end

@@ -1,0 +1,38 @@
+.mb-4
+  = link_to t('.repo_link'), repository_path(@repository), class: 'btn btn-primary mb-4 mt-4'
+  h1 = "#{t('.check')} ##{@check.id}"
+
+  table.table
+    tbody
+      tr
+        td = t('.created_at')
+        td = I18n.l(@repository.created_at, format: :default)
+      tr
+        td = t('.status')
+        td = @check.state
+      tr
+        td = t('.check_passed')
+        td = @check.check_passed
+      tr
+        td = t('.offense_count')
+        td = @check.offense_count
+      tr
+        td = t('.commit_id')
+        td = link_to @check.commit_id, "https://github.com/#{current_user.nickname}/#{@repository.name}/commit/#{@check.commit_id}"
+
+  - if @check.offense_count.positive?
+    table.table.table-hover.mb-5
+      thead
+        tr
+          th = t('.message')
+          th = t('.name')
+          th = t('.line_column')
+      tbody
+        - @check_result.each do |file|
+          tr
+            td[colspan=3] = link_to file[:path], "https://github.com/#{current_user.nickname}/#{@repository.name}/tree/#{@check.commit_id}/#{file[:path]}"
+          - file[:offenses].each do |offense|
+            tr
+              td = offense[:message]
+              td = offense[:name]
+              td = "#{offense[:line]}:#{offense[:column]}"

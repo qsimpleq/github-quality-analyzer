@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     root 'home#show'
 
     resources :repositories, only: %i[index new create show] do
+      resources :checks, only: :show
       member do
         patch :check
       end
