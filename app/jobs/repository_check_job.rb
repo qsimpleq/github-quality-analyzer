@@ -11,9 +11,17 @@ class RepositoryCheckJob < ApplicationJob
     @repository = @params[:repository]
     @check = Repository::Check.create(repository: @repository)
 
-    (@check.fetch! and repo_info&.fetch and @check.is_fetched!) or return failed
-    (@check.lint! and lint and @check.is_linted!) or return failed
-    (@check.parse! and parse and @check.is_parsed!) or return failed
+    @check.fetch!
+    repo_info&.fetch or return failed
+    @check.is_fetched!
+
+    @check.lint!
+    lint or return failed
+    @check.is_linted!
+
+    @check.parse!
+    parse or return failed
+    @check.is_parsed!
 
     @check.finish!
   end
@@ -38,6 +46,8 @@ class RepositoryCheckJob < ApplicationJob
       end
       git = Git.open(@repository.directory)
       @check.commit_id = git.log.first.sha[0, 8]
+
+      Dir.chdir(Rails.root)
 
       self
     rescue Git::FailedError

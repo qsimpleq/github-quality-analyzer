@@ -4,7 +4,7 @@ require 'open3'
 
 class Repository
   class Linter
-    attr_reader :linter, :repository, :result, :offense_count
+    attr_reader :linter, :repository, :json_result, :parse_result, :result, :offense_count
 
     def initialize(repository)
       @repository = repository
@@ -13,13 +13,15 @@ class Repository
 
     def run
       @linter.run
+      @json_result = @linter.json_result
       @result = @linter.result
-      @offense_count = @linter.offense_count
       self
     end
 
     def parse
-      @linter.parse
+      @parse_result = @linter.parse
+      @offense_count = @linter.offense_count
+      @parse_result
     end
   end
 end
