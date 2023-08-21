@@ -3,6 +3,8 @@
 class ApplicationContainer
   extend Dry::Container::Mixin
 
+  register :USER_REPOSITORIES_EXPIRE, -> { ENV.fetch('USER_REPOSITORIES_EXPIRE', 10.minutes) }
+
   register :redis do
     @register_redis ||= ConnectionPool::Wrapper.new do
       if Rails.env.production?

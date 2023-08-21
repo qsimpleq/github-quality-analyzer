@@ -1,9 +1,25 @@
 ---
-
 ru:
   action:
     sign_in: Войти с помощью Github
     sign_out: Выйти
+  activerecord:
+    attributes:
+      check:
+        states:
+          checked: Репозиторий проверен
+          checking: Проверяется репозиторий
+          created: Запущена
+          failed: Завершена с ошибкой
+          fetched: Репозиторий загружен
+          fetching: Загружается репозиторий
+          finished: Завершена
+          parsed: Парсинг результатов завершён
+          parsing: Парсятся результаты линтинга
+      user:
+        email: Email
+        nickname: Ник
+        token: Токен
   app_name: Анализатор качества репозиториев
   layouts:
     shared:
@@ -14,22 +30,47 @@ ru:
     default: Вы должны быть авторизованы
   web:
     auth:
-      sign_in: Вы успешно вошли
-      sign_out: Вы вышли из системы
       callback:
         error: Невозможно авторизовать пользователя
+      sign_in: Вы успешно вошли
+      sign_out: Вы вышли из системы
+    checks:
+      show:
+        check: Проверка
+        check_passed: Проверка пройдена
+        commit_id: ID коммита
+        created_at: Дата создания
+        line_column: Строка и символ
+        message: Сообщение
+        name: Идентификатор правила
+        offense_count: Количество замечаний
+        repo_link: Перейти к репозиторию
+        status: Статус
     home:
       show:
-        hello: Привет от Хекслета!
         courses: Практические курсы по программированию
+        hello: Привет от Хекслета!
         more_info: Узнать больше
         more_info_link: https://ru.hexlet.io/programs/rails/projects/66
-        project_info: Проект, который помогает автоматически следить за качеством репозиториев на Github. Он отслеживает изменения и прогоняет их через встроенные анализаторы. Затем формирует отчеты и отправляет их пользователю.
+        project_info: Проект, который помогает автоматически следить за качеством
+          репозиториев на Github. Он отслеживает изменения и прогоняет их через встроенные
+          анализаторы. Затем формирует отчеты и отправляет их пользователю.
     repositories:
+      check_started: Проверка запущена
+      create:
+        error: Не удалось добавить репозиторий
+        success: Репозиторий успешно добавлен
       index:
         add: Добавить
-      create:
-        success: Репозиторий успешно добавлен
-        error: Не удалось добавить репозиторий
+        language: Язык
+        last_check_status: Статус последней проверки
+        name: Название
       show:
         check: Проверить
+        check_passed: Проверка пройдена?
+        commit_id: ID коммита
+        created_at: Дата создания
+        language: Язык
+        name: Название
+        state: Статус
+        updated_at: Дата обновления

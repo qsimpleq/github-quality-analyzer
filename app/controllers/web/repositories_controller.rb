@@ -2,7 +2,6 @@
 
 module Web
   class RepositoriesController < Web::ApplicationController
-    USER_REPOSITORIES_EXPIRE = 10 # 10.minutes
     before_action :require_signed_in_user!
 
     def index
@@ -60,7 +59,7 @@ module Web
 
       response = fetch_repos
       redis.set(user_repos, JSON.generate(response))
-      redis.expire(user_repos, USER_REPOSITORIES_EXPIRE)
+      redis.expire(user_repos, ApplicationContainer[:USER_REPOSITORIES_EXPIRE])
       response
     end
 

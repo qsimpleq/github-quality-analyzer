@@ -27,8 +27,8 @@ hr
     tbody
       - @repository.checks.order(id: :desc).each do |check|
         tr
-          td[scope="row"] = link_to check.id, repository_check_path(@repository.id, check.id)
-          td[scope="row"] = check.state
-          td[scope="row"] = link_to check.commit_id, "https://github.com/#{current_user.nickname}/#{@repository.name}/commit/#{check.commit_id}"
-          td[scope="row"] = check.check_passed
-          td[scope="row"] = I18n.l(check.created_at, format: :default)
+          td = link_to check.id, repository_check_path(@repository.id, check.id)
+          td = t("activerecord.attributes.check.states.#{check.state}")
+          td = link_to check.commit_id, "#{repo_url(@repository)}/commit/#{check.commit_id}"
+          td = check.check_passed
+          td = I18n.l(check.created_at, format: :short)

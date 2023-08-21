@@ -9,7 +9,7 @@
         td = I18n.l(@repository.created_at, format: :default)
       tr
         td = t('.status')
-        td = @check.state
+        td = t("activerecord.attributes.check.states.#{@check.state}")
       tr
         td = t('.check_passed')
         td = @check.check_passed
@@ -18,7 +18,7 @@
         td = @check.offense_count
       tr
         td = t('.commit_id')
-        td = link_to @check.commit_id, "https://github.com/#{current_user.nickname}/#{@repository.name}/commit/#{@check.commit_id}"
+        td = link_to @check.commit_id, "#{repo_url(@repository)}/commit/#{@check.commit_id}"
 
   - if @check.offense_count.positive?
     table.table.table-hover.mb-5
@@ -30,7 +30,7 @@
       tbody
         - @check_result.each do |file|
           tr
-            td[colspan=3] = link_to file[:path], "https://github.com/#{current_user.nickname}/#{@repository.name}/tree/#{@check.commit_id}/#{file[:path]}"
+            td[colspan=3] = link_to file[:path], "#{repo_url(@repository)}/tree/#{@check.commit_id}/#{file[:path]}"
           - file[:offenses].each do |offense|
             tr
               td = offense[:message]
