@@ -74,3 +74,25 @@ ru:
         name: Название
         state: Статус
         updated_at: Дата обновления
+
+  check_mailer:
+    lint_failed:
+      subject: "Проверка репозитория %{repo_name} линтером не удалась"
+      content:
+        - "%{user_name}, проверка репозитория %{repo_url} линтером не удалась"
+        - "Результаты по ссылке: %{check_url}"
+        - "Текст ошибки:"
+        - "%{error}"
+      content_html:
+        - "%{user_name}, проверка репозитория <a href=\"%{repo_url}\">%{repo_name}</a> линтером не удалась"
+        - "Результаты по <a href=\"%{check_url}\">ссылке</a>"
+        - "Текст ошибки:"
+        - "%{error}"
+    lint_with_offenses:
+      subject: "Проверка репозитория %{repo_name} линтером завершена. Найдены ошибки!"
+      content:
+        - "%{user_name}, проверка репозитория %{repo_url} завершилась: Найдены ошибки!"
+        - "Результаты по ссылке: %{check_url}"
+      content_html:
+        - "%{user_name}, проверка репозитория <a href=\"%{repo_url}\">%{repo_name}</a> завершилась: Найдены ошибки!"
+        - "Результаты по <a href=\"%{check_url}\">ссылке</a>"

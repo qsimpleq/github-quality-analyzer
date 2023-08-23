@@ -9,7 +9,7 @@ class Repository
         @repository = repository
       end
 
-      def run
+      def lint
         Dir.chdir(@repository.directory)
 
         lint_options = [
@@ -21,13 +21,17 @@ class Repository
 
         command = "bundle exec rubocop #{lint_options.join(' ')}"
       ensure
-        stdout, _stderr, status = Open3.capture3(command)
-        @json_result = stdout
-        @result = {
-          status: status.exitstatus,
-          result: JSON.parse(@json_result, symbolize_names: true)
-        }
+        stdout, stderr, status = Open3.capture3(command)
+
+        @result = { status: status.exitstatus }
+        if @result[:status] > 1 && stderr
+          @result[:error] = stderr
+        else
+          @json_result = stdout
+          @result[:result] = JSON.parse(@json_result, symbolize_names: true)
+        end
         Dir.chdir(Rails.root)
+
         self
       end
 

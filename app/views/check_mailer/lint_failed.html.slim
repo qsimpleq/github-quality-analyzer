@@ -1,0 +1,6 @@
+== render partial: 'mail',
+          locals: { content: t('.content_html', user_name: @user.nickname, \
+                                                repo_name: @repository.full_name, \
+                                                repo_url: @repository.url, \
+                                                check_url: @repository_check_url, \
+                                                error: @error) }

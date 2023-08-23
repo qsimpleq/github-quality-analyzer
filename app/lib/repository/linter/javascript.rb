@@ -9,7 +9,7 @@ class Repository
         @repository = repository
       end
 
-      def run
+      def lint
         lint_options = [
           select_config,
           '--format json'
@@ -17,12 +17,16 @@ class Repository
 
         command = "yarn run eslint #{lint_options.join(' ')} #{@repository.directory}"
       ensure
-        stdout, _stderr, status = Open3.capture3(command)
-        @json_result = stdout.split("\n")[2]
-        @result = {
-          status: status.exitstatus,
-          result: JSON.parse(@json_result, symbolize_names: true)
-        }
+        stdout, stderr, status = Open3.capture3(command)
+
+        @result = { status: status.exitstatus }
+        if @result[:status] > 1 && stderr
+          @result[:error] = stderr
+        else
+          @json_result = stdout.split("\n")[2]
+          @result[:result] = JSON.parse(@json_result, symbolize_names: true)
+        end
+
         self
       end
 

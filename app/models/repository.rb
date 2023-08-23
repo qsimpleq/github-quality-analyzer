@@ -39,4 +39,12 @@ class Repository < ApplicationRecord
   def directory
     Rails.root.join("#{user_directory}/#{name}")
   end
+
+  def url
+    "https://github.com/#{full_name}"
+  end
+
+  def full_name
+    "#{user.nickname}/#{name}"
+  end
 end

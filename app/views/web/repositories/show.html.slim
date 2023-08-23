@@ -1,5 +1,5 @@
 .mb-4
-  h1 = "#{current_user.nickname}/#{@repository.name}"
+  h1 = @repository.full_name
 = link_to t('.check'), check_repository_path, class: 'btn btn-primary mb-4', data: { turbo_method: :patch }
 p
   strong.me-2 = t('.name')
@@ -29,6 +29,6 @@ hr
         tr
           td = link_to check.id, repository_check_path(@repository.id, check.id)
           td = t("activerecord.attributes.check.states.#{check.state}")
-          td = link_to check.commit_id, "#{repo_url(@repository)}/commit/#{check.commit_id}"
+          td = link_to check.commit_id, "#{@repository.url}/commit/#{check.commit_id}"
           td = check.check_passed
           td = I18n.l(check.created_at, format: :short)

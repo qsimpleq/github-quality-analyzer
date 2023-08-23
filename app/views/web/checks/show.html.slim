@@ -18,9 +18,9 @@
         td = @check.offense_count
       tr
         td = t('.commit_id')
-        td = link_to @check.commit_id, "#{repo_url(@repository)}/commit/#{@check.commit_id}"
+        td = link_to @check.commit_id, "#{@repository.url}/commit/#{@check.commit_id}"
 
-  - if @check.offense_count.positive?
+  - if @check_result && @check.offense_count.positive?
     table.table.table-hover.mb-5
       thead
         tr
@@ -30,7 +30,7 @@
       tbody
         - @check_result.each do |file|
           tr
-            td[colspan=3] = link_to file[:path], "#{repo_url(@repository)}/tree/#{@check.commit_id}/#{file[:path]}"
+            td[colspan=3] = link_to file[:path], "#{@repository.url}/tree/#{@check.commit_id}/#{file[:path]}"
           - file[:offenses].each do |offense|
             tr
               td = offense[:message]

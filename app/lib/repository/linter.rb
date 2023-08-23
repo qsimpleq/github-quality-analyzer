@@ -11,14 +11,18 @@ class Repository
       @linter = "Repository::Linter::#{repository.language.capitalize}".constantize.new(repository)
     end
 
-    def run
-      @linter.run
-      @json_result = @linter.json_result
+    def lint
+      @linter.lint
       @result = @linter.result
+      return if @linter.result[:error]
+
+      @json_result = @linter.json_result
       self
     end
 
     def parse
+      return if @result[:error]
+
       @parse_result = @linter.parse
       @offense_count = @linter.offense_count
       @parse_result

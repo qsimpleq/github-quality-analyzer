@@ -16,7 +16,10 @@ class RepositoryCheckJob < ApplicationJob
     @check.is_fetched!
 
     @check.lint!
-    lint or return failed
+    unless lint
+      CheckMailer.with(check: @check, error: @linter.result[:error]).lint_failed.deliver_later
+      return failed
+    end
     @check.is_linted!
 
     @check.parse!
@@ -24,6 +27,7 @@ class RepositoryCheckJob < ApplicationJob
     @check.is_parsed!
 
     @check.finish!
+    CheckMailer.with(check: @check).lint_with_offenses.deliver_later if @check.offense_count.positive?
   ensure
     FileUtils.rmtree(@repository.directory)
   end
@@ -53,14 +57,13 @@ class RepositoryCheckJob < ApplicationJob
 
   def lint
     @linter = Repository::Linter.new(@repository)
-    result = @linter.run.result
-    return if result[:status] > 1
+    return unless @linter.lint
 
     self
   end
 
   def parse
-    result = @linter.parse
+    result = @linter.parse or return
     @check.offense_count = @linter.offense_count
     @check.check_result = JSON.generate(result)
     @check.check_passed = true if @check.offense_count.zero?

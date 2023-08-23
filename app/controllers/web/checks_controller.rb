@@ -7,7 +7,7 @@ module Web
     def show
       @repository = current_user.repositories.find(params[:repository_id])
       @check = @repository.checks.find(params[:id])
-      @check_result = JSON.parse(@check.check_result, symbolize_names: true)
+      @check_result = @check.check_result.nil? ? nil : JSON.parse(@check.check_result, symbolize_names: true)
     end
   end
 end
