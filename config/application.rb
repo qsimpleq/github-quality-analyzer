@@ -17,7 +17,7 @@ module RailsProject66
     config.load_defaults 7.0
     config.i18n.default_locale = :ru
 
-    routes.default_url_options = { host: ENV['BASE_URL'] }
+    routes.default_url_options = { host: ENV.fetch('BASE_URL', nil) }
 
     # Configuration for the application, engines, and railties goes here.
     config.after_initialize do
