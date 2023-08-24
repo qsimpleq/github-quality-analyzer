@@ -36,7 +36,7 @@ module Web
         return redirect_to repository_path(params[:id]), alert: t('.last_in_process')
       end
 
-      RepositoryCheckJob.perform_later(repository: @repository, user: current_user)
+      RepositoryCheckJob.perform_later(repository: @repository)
       redirect_to repository_path(params[:id]), notice: t('.check_started')
     end
 

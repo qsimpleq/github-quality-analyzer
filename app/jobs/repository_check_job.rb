@@ -7,8 +7,8 @@ class RepositoryCheckJob < ApplicationJob
 
   def perform(params)
     @params = params
-    current_user(@params[:user])
     @repository = @params[:repository]
+    current_user(@repository.user)
     @check = Repository::Check.create(repository: @repository)
 
     @check.fetch!
