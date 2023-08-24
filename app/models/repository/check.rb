@@ -72,5 +72,9 @@ class Repository
         transitions from: %i[fetching linting checked parsing parsed], to: :failed
       end
     end
+
+    def in_process?
+      !finished? && !failed?
+    end
   end
 end

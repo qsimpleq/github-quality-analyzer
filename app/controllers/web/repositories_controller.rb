@@ -32,6 +32,10 @@ module Web
 
     def check
       @repository = current_user.repositories.find(params[:id])
+      if @repository.checks.last.in_process?
+        return redirect_to repository_path(params[:id]), alert: t('.last_in_process')
+      end
+
       RepositoryCheckJob.perform_later(repository: @repository, user: current_user)
       redirect_to repository_path(params[:id]), notice: t('.check_started')
     end
