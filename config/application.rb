@@ -11,7 +11,7 @@ autoload :ApplicationContainer, './app/lib/application_container'
 
 module RailsProject66
   class Application < Rails::Application
-    DEFAULT_HOST_URL = ENV.fetch("DEFAULT_HOST_URL_#{Rails.env.upcase}")
+    DEFAULT_HOST_URL = ENV.fetch("DEFAULT_HOST_URL_#{Rails.env.upcase}", 'http://127.0.0.1:3000')
 
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
@@ -20,9 +20,6 @@ module RailsProject66
     routes.default_url_options = { host: ENV.fetch('BASE_URL', nil) }
 
     # Configuration for the application, engines, and railties goes here.
-    config.after_initialize do
-      ActionDispatch::Flash::FlashHash.include(FlashDecorator)
-    end
     # These settings can be overridden in specific environments using the files
     # in config/environments, which are processed later.
     #
