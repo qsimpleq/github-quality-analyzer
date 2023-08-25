@@ -7,11 +7,18 @@ if ENV['RAILS_ENV'] == 'test' && ENV['COVERAGE']
 end
 
 require_relative '../config/environment'
+require 'active_job/test_helper'
 require 'rails/test_help'
 require 'fakeredis/minitest'
 require 'webmock/minitest'
 
+ActiveJob::Base.queue_adapter = :test
 OmniAuth.config.test_mode = true
+I18n.locale = :ru
+
+def t(key, **)
+  controller.t(key, **)
+end
 
 def fixture_json_load(*, **opts)
   JSON.parse(fixture_file_read(*), opts)
@@ -59,10 +66,11 @@ end
 module ActionDispatch
   class IntegrationTest
     include AuthManager
+    include AnyClients
 
     def sign_in(user, options = {})
       mock_omniauth(user, options)
-      get callback_auth_url('github')
+      get callback_auth_path('github')
     end
   end
 end

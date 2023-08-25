@@ -29,6 +29,8 @@ Metrics/MethodLength:
   Enabled: false
 Minitest/EmptyLineBeforeAssertionMethods:
   Enabled: false
+Minitest/MultipleAssertions:
+  Enabled: false
 Rails/UniqueValidationWithoutIndex:
   Enabled: false
 Rake/Desc:
