@@ -25,7 +25,7 @@ module Web
 
       OmniAuth.config.mock_auth[:github] = OmniAuth::AuthHash::InfoHash.new(auth_hash)
 
-      get callback_auth_url('github')
+      get callback_auth_path('github')
 
       assert_response :redirect
 
@@ -36,7 +36,7 @@ module Web
     end
 
     test 'should destroy' do
-      delete auth_logout_url
+      delete auth_logout_path
 
       assert_response :redirect
     end

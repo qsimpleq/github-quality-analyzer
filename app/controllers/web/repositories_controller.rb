@@ -22,11 +22,10 @@ module Web
       @repository.name ||= '-'
       if @repository.save
         redis.del(user_repos)
-        RepositoryUpdateJob.perform_later(repository: @repository, user: current_user)
+        RepositoryUpdateJob.perform_later(repository: @repository)
         redirect_to repositories_path, notice: t('.success')
       else
-        @available_repositories = select_available_repos(cached_fetch_repos)
-        render :new, alert: t('.error')
+        redirect_to new_repository_path, alert: t('.error')
       end
     end
 

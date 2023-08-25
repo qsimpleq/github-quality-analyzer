@@ -4,7 +4,7 @@ class RepositoryUpdateJob < ApplicationJob
   queue_as :default
 
   def perform(params)
-    current_user(params[:user])
+    current_user(params[:repository].user)
     repo = octokit.repo(params[:repository].github_id)
 
     return false if repo.nil?
