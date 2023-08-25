@@ -16,6 +16,6 @@
 
 <% (1..2).each do |num| %>
 user<%= num %>:
-  nickname: &LABEL
+  nickname: user<%= num %>
   email: user<%= num %>@example.com
 <% end %>

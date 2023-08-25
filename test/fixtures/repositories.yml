@@ -23,7 +23,7 @@
 <% (1..10).each do |num| %>
 repo<%= num %>:
   user: user1
-  name: &LABEL
+  name: repo<%= num %>
   language: <%= num.odd? ? 'ruby' : 'javascript' %>
   github_id: <%= num %>
   repo_created_at: <%= Faker::Time.between(from: 2.years.ago, to: 1.year.ago, format: :default) %>
