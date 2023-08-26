@@ -11,29 +11,40 @@ module Api
       when 'push', nil
         push(repository_params[:id])
       else
-        render json: { '501': :not_implemented.to_s.humanize }, status: :not_implemented
+        render_json :not_implemented
       end
     end
 
     private
 
     def ping
-      head :ok
-      # render json: { '200': 'Ok', application: Rails.application.class.module_parent_name }, status: :ok
+      render_json :ok, application: Rails.application.class.module_parent_name
     end
 
     def push(github_id)
       repository = Repository.find_by(github_id:)
-      return render json: { '404': :not_found.to_s.humanize }, status: :not_found if repository.nil?
-      return render json: { '409': :conflict.to_s.humanize }, status: :conflict if repository.checks.last&.in_process?
+      return render_json :not_found if repository.nil?
+      return render_json :conflict if repository.checks.last&.in_process?
 
       RepositoryCheckJob.perform_later(repository:)
 
-      render json: { '200': :ok.to_s.humanize }, status: :ok
+      render_json :ok
     end
 
     def repository_params
       params.require('repository').permit('id')
+    end
+
+    def render_json(status, **)
+      if status.to_s.match?(/^\d+$/)
+        status_code = status.to_s
+        status_name = Rack::Utils::HTTP_STATUS_CODES[status].downcase.underscore.tr(' ', '_').to_sym
+      else
+        status_code = Rack::Utils::SYMBOL_TO_STATUS_CODE[status].to_s
+        status_name = status
+      end
+
+      render json: { status_code => status_name.to_s.humanize }.merge(**), status: status_name
     end
   end
 end
