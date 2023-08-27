@@ -27,8 +27,32 @@ require 'test_helper'
 
 class Repository
   class CheckTest < ActiveSupport::TestCase
-    # test "the truth" do
-    #   assert true
-    # end
+    test '#fetch!' do
+      assert repository_checks(:created).fetch!
+    end
+
+    test '#is_fetched!' do
+      assert repository_checks(:fetching).is_fetched!
+    end
+
+    test '#lint!' do
+      assert repository_checks(:fetched).lint!
+    end
+
+    test '#is_linted!' do
+      assert repository_checks(:linting).is_linted!
+    end
+
+    test '#parse!' do
+      assert repository_checks(:linted).parse!
+    end
+
+    test '#finish!' do
+      assert repository_checks(:parsed).finish!
+    end
+
+    test '#failed!' do
+      assert repository_checks(:parsed).failed!
+    end
   end
 end
