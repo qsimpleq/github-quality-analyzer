@@ -3,7 +3,7 @@
 class RepositoryCheckJob < ApplicationJob
   queue_as :default
 
-  attr_reader :repository, :check, :linter, :github_info, :params
+  attr_reader :repository, :check, :linter, :params
 
   def perform(params)
     @params = params
@@ -12,7 +12,7 @@ class RepositoryCheckJob < ApplicationJob
     @check = Repository::Check.create(repository: @repository)
 
     @check.fetch!
-    repo_info&.fetch or return failed
+    github_info&.fetch or return failed
     @check.is_fetched!
 
     @check.lint!
@@ -32,7 +32,7 @@ class RepositoryCheckJob < ApplicationJob
     FileUtils.rmtree(@repository.directory)
   end
 
-  def repo_info
+  def github_info
     @github_info = octokit.repo(@params[:repository].github_id)
     return if @github_info.nil?
 
@@ -57,6 +57,7 @@ class RepositoryCheckJob < ApplicationJob
 
   def lint
     @linter = Repository::Linter.new(@repository)
+    @linter.lint
     return unless @linter.lint
 
     self

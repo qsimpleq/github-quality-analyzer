@@ -1,6 +1,6 @@
 .mb-4
   h1 = @repository.full_name
-= link_to t('.check'), check_repository_path, class: "btn btn-primary mb-4#{@repository.checks.last.in_process? ? ' disabled' : ''}",
+= link_to t('.check'), check_repository_path, class: "btn btn-primary mb-4#{@repository.checks&.last&.in_process? ? ' disabled' : ''}",
                                               data: { turbo_method: :patch }
 p
   strong.me-2 = t('.name')

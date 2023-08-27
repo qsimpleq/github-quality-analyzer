@@ -39,6 +39,14 @@ class Repository
         @offense_count = @result[:result][:summary][:offense_count]
         return [] if @offense_count.zero?
 
+        if @result[:status] > 1 && stderr
+          @result[:error] = stderr
+        else
+          @json_result = stdout
+          @result[:result] = JSON.parse(@json_result, symbolize_names: true)
+        end
+        Dir.chdir(Rails.root)
+
         @result[:result][:files].reject { _1[:offenses].empty? }.map do |file|
           offenses = file[:offenses].map do |offence|
             {

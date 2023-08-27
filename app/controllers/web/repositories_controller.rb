@@ -31,11 +31,11 @@ module Web
 
     def check
       @repository = current_user.repositories.find(params[:id])
-      if @repository.checks.last.in_process?
+      if @repository.checks&.last&.in_process?
         return redirect_to repository_path(params[:id]), alert: t('.last_in_process')
       end
 
-      RepositoryCheckJob.perform_later(repository: @repository)
+      ApplicationContainer[:repository_check_job].perform_later(repository: @repository)
       redirect_to repository_path(params[:id]), notice: t('.check_started')
     end
 

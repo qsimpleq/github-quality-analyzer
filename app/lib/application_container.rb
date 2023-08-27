@@ -18,7 +18,9 @@ class ApplicationContainer
   if Rails.env.test?
     autoload :Stubs, Rails.root.join('app/lib/stubs')
     register :octokit, -> { Stubs::OctokitClientStub }
+    register :repository_check_job, -> { Stubs::RepositoryCheckJobStub }
   else
     register :octokit, -> { Octokit::Client }
+    register :repository_check_job, -> { RepositoryCheckJob }
   end
 end
