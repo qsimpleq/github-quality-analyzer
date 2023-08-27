@@ -1,0 +1,45 @@
+[
+  {
+    "filePath": "/home/user1/Hexlet/rails-project-66/tmp/repositories/user1/hello-world-js/src/index.js",
+    "messages": [
+
+    ],
+    "suppressedMessages": [
+
+    ],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": [
+
+    ]
+  },
+  {
+    "filePath": "/home/user1/Hexlet/rails-project-66/tmp/repositories/user1/hello-world-js/test/index.js",
+    "messages": [
+      {
+        "ruleId": null,
+        "fatal": true,
+        "severity": 2,
+        "message": "Parsing error: The keyword 'const' is reserved",
+        "line": 1,
+        "column": 1,
+        "nodeType": null
+      }
+    ],
+    "suppressedMessages": [
+
+    ],
+    "errorCount": 1,
+    "fatalErrorCount": 1,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "source": "const helloLib = require('../src/index')\r\n\r\nif(helloLib.hello() === 'Hello world!') {\r\n\tconsole.log('Test passed!');\r\n}\r\nelse {\r\n\tthrow new Error('Test failed.');\r\n}\r\n",
+    "usedDeprecatedRules": [
+
+    ]
+  }
+]

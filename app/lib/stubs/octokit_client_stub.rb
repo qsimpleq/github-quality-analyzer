@@ -2,28 +2,21 @@
 
 module Stubs
   class OctokitClientStub
-    attr_reader :octokit_search_repositories, :last_response
+    attr_reader :octokit_repositories, :last_response
 
-    OCTOKIT_SEARCH_REPOSITORY_PATH = Rails.root.join('test/fixtures/files/octokit_search_repositories.json')
+    OCTOKIT_REPOSITORIES_PATH = Rails.root.join('test/fixtures/files/octokit_repositories.json')
 
     def initialize(*)
       @last_response = nil
     end
 
     def repos
-      result = load_json_fixture(OCTOKIT_SEARCH_REPOSITORY_PATH)
+      result = load_json_fixture(OCTOKIT_REPOSITORIES_PATH)
       set_last_response(result)
     end
 
     def repo(github_id)
-      result = load_json_fixture(OCTOKIT_SEARCH_REPOSITORY_PATH).find { _1[:id] == github_id }
-      set_last_response(result)
-    end
-
-    def search_repos(query, _options = {})
-      language_filter_array = query.scan(/language:(\w+)/)&.flatten || []
-      result = load_json_fixture(OCTOKIT_SEARCH_REPOSITORY_PATH)
-      result.select { language_filter_array.include?(_1[:language]&.downcase) }
+      result = load_json_fixture(OCTOKIT_REPOSITORIES_PATH).find { _1[:id] == github_id }
       set_last_response(result)
     end
 

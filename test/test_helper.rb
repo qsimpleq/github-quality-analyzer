@@ -14,7 +14,7 @@ require 'webmock/minitest'
 
 ActiveJob::Base.queue_adapter = :test
 OmniAuth.config.test_mode = true
-I18n.locale = :ru
+I18n.with_locale(:ru)
 
 def t(key, **)
   controller.t(key, **)
