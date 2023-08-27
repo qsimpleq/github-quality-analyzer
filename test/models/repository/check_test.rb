@@ -52,6 +52,10 @@ class Repository
     end
 
     test '#failed!' do
+      assert repository_checks(:fetching).failed
+      assert repository_checks(:fetched).failed!
+      assert repository_checks(:linting).failed!
+      assert repository_checks(:linted).failed!
       assert repository_checks(:parsed).failed!
     end
   end

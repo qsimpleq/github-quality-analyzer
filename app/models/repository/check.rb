@@ -69,7 +69,7 @@ class Repository
       end
 
       event :failed do
-        transitions from: %i[fetching linting checked parsing parsed], to: :failed
+        transitions from: %i[fetching fetched linting linted parsing parsed finished], to: :failed
       end
     end
 
