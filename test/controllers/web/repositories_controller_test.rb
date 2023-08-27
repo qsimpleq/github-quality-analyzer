@@ -59,7 +59,7 @@ module Web
 
       get repository_path(@repo)
 
-      patch check_repository_path(@repo)
+      post repository_checks_path(@repo)
       assert_redirected_to repository_path(@repo)
       assert_equal flash[:notice], t('.check_started')
 
@@ -78,7 +78,7 @@ module Web
 
       get repository_path(@repo)
 
-      patch check_repository_path(@repo)
+      post repository_checks_path(@repo)
       assert_redirected_to repository_path(@repo)
       assert_equal flash[:notice], t('.check_started')
 

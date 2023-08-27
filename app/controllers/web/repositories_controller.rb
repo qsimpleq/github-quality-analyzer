@@ -5,21 +5,25 @@ module Web
     before_action :require_signed_in_user!
 
     def index
+      authorize Repository
       @repositories = current_user.repositories.order(name: :asc)
     end
 
     def show
       @repository = current_user.repositories.find(params[:id])
+      authorize @repository
     end
 
     def new
       @repository = Repository.new
+      authorize @repository
       @available_repositories = select_available_repos(cached_fetch_repos)
     end
 
     def create
       @repository = current_user.repositories.find_or_initialize_by(repository_params)
       @repository.name ||= '-'
+      authorize @repository
       if @repository.save
         redis.del(user_repos)
         RepositoryUpdateJob.perform_later(repository: @repository)
@@ -27,16 +31,6 @@ module Web
       else
         redirect_to new_repository_path, alert: t('.error')
       end
-    end
-
-    def check
-      @repository = current_user.repositories.find(params[:id])
-      if @repository.checks&.last&.in_process?
-        return redirect_to repository_path(params[:id]), alert: t('.last_in_process')
-      end
-
-      ApplicationContainer[:repository_check_job].perform_later(repository: @repository)
-      redirect_to repository_path(params[:id]), notice: t('.check_started')
     end
 
     private

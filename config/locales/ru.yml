@@ -34,18 +34,6 @@ ru:
         error: Невозможно авторизовать пользователя
       sign_in: Вы успешно вошли
       sign_out: Вы вышли из системы
-    checks:
-      show:
-        check: Проверка
-        check_passed: Проверка пройдена
-        commit_id: ID коммита
-        created_at: Дата создания
-        line_column: Строка и символ
-        message: Сообщение
-        name: Идентификатор правила
-        offense_count: Количество замечаний
-        repo_link: Перейти к репозиторию
-        status: Статус
     home:
       show:
         courses: Практические курсы по программированию
@@ -56,7 +44,20 @@ ru:
           репозиториев на Github. Он отслеживает изменения и прогоняет их через встроенные
           анализаторы. Затем формирует отчеты и отправляет их пользователю.
     repositories:
-      check_started: Проверка запущена
+      checks:
+        create:
+          check_started: Проверка запущена
+        show:
+          check: Проверка
+          check_passed: Проверка пройдена
+          commit_id: ID коммита
+          created_at: Дата создания
+          line_column: Строка и символ
+          message: Сообщение
+          name: Идентификатор правила
+          offense_count: Количество замечаний
+          repo_link: Перейти к репозиторию
+          status: Статус
       last_in_process: Уже запущена проверка, дождитесь окончания
       create:
         error: Не удалось добавить репозиторий
@@ -97,3 +98,5 @@ ru:
       content_html:
         - "%{user_name}, проверка репозитория <a href=\"%{repo_url}\">%{repo_name}</a> завершилась: Найдены ошибки!"
         - "Результаты по <a href=\"%{check_url}\">ссылке</a>"
+  application_policy:
+    resolve: "Вы должны объявить метод #resolve в %{class}"
