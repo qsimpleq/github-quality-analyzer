@@ -2,6 +2,7 @@
 
 module Stubs
   class RepositoryCheckJobStub < RepositoryCheckJob
+    include Stubs
     attr_reader :language
 
     JAVASCRIPT_LINT_PATH = Rails.root.join('test/fixtures/files/javascript_lint_with_offences.json')
@@ -12,9 +13,9 @@ module Stubs
 
     def github_info
       @language = @repository.language
-      @repo_info = "#{@language.upcase}_REPO_INFO_PATH".constantize
-      @repo_lint = "#{@language.upcase}_LINT_PATH".constantize
-      @github_info = JSON.parse(load_json_fixture(@repo_info), symbolize_names: true)
+      @repo_info = "Stubs::RepositoryCheckJobStub::#{@language.upcase}_REPO_INFO_PATH".constantize
+      @repo_lint = "Stubs::RepositoryCheckJobStub::#{@language.upcase}_LINT_PATH".constantize
+      @github_info = load_json_fixture(@repo_info)
       self
     end
 
@@ -29,12 +30,13 @@ module Stubs
     end
 
     def parse
-      result_json = load_json_fixture(@repo_lint)
-      result = JSON.parse(result_json, symbolize_names: true)
+      result_json = load_fixture(@repo_lint)
+      result = load_json_fixture(@repo_lint)
 
       @check.offense_count = offense_count(result)
       @check.check_result = result_json
       @check.check_passed = true if @check.offense_count.zero?
+
       self
     end
 

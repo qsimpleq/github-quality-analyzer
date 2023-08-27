@@ -5,7 +5,7 @@ require 'test_helper'
 module Web
   class RepositoriesControllerTest < ActionDispatch::IntegrationTest
     setup do
-      @repo_one = repositories(:repo1)
+      @repo = repositories(:repo1)
       @user1 = users(:user1)
       sign_in(@user1)
     end
@@ -50,16 +50,45 @@ module Web
     end
 
     test '#show' do
-      get repository_path(@repo_one)
+      get repository_path(@repo)
       assert_response :success
     end
 
-    test '#check' do
-      get repository_path(@repo_one)
+    test '#check ruby' do
+      assert_equal('ruby', @repo.language)
 
-      patch check_repository_path(@repo_one)
-      assert_redirected_to repository_path(@repo_one)
+      get repository_path(@repo)
+
+      patch check_repository_path(@repo)
+      assert_redirected_to repository_path(@repo)
       assert_equal flash[:notice], t('.check_started')
+
+      assert_enqueued_with(job: ApplicationContainer[:repository_check_job], args: [{ repository: @repo }])
+      perform_enqueued_jobs
+
+      check = @repo.checks.last
+      assert { check.state == 'finished' }
+      assert { check.offense_count.zero? }
+      assert { check.check_passed }
+    end
+
+    test '#check javascript' do
+      @repo = repositories(:repo2)
+      assert_equal('javascript', @repo.language)
+
+      get repository_path(@repo)
+
+      patch check_repository_path(@repo)
+      assert_redirected_to repository_path(@repo)
+      assert_equal flash[:notice], t('.check_started')
+
+      assert_enqueued_with(job: ApplicationContainer[:repository_check_job], args: [{ repository: @repo }])
+      perform_enqueued_jobs
+
+      check = @repo.checks.last
+      assert { check.state == 'finished' }
+      assert { check.offense_count.positive? }
+      assert_not check.check_passed
     end
   end
 end

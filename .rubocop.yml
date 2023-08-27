@@ -31,6 +31,8 @@ Minitest/EmptyLineBeforeAssertionMethods:
   Enabled: false
 Minitest/MultipleAssertions:
   Enabled: false
+Rails/I18nLocaleAssignment:
+  Enabled: false
 Rails/UniqueValidationWithoutIndex:
   Enabled: false
 Rake/Desc:
