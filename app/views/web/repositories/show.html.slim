@@ -1,7 +1,8 @@
 .mb-4
   h1 = @repository.full_name
-= link_to t('.check'), repository_checks_path(@repository), class: "btn btn-primary mb-4#{@repository.checks&.last&.in_process? ? ' disabled' : ''}",
-                                                            data: { turbo_method: :post }
+= link_to t('.check'), repository_checks_path(@repository),
+                       class: "btn btn-primary mb-4#{@repository.checks&.last&.in_process? ? ' disabled' : ''}",
+                       data: { turbo_method: :post }
 p
   strong.me-2 = t('.name')
   = "#{current_user.nickname}/#{@repository.name}"

@@ -52,11 +52,11 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     authentication: :cram_md5,
-    user_name: ENV.fetch('MAIL_USERNAME'),
-    password: ENV.fetch('MAIL_PASSWORD'),
-    address: ENV.fetch('MAIL_ADDRESS'),
-    host: ENV.fetch('MAIL_HOST'),
-    port: ENV.fetch('MAIL_PORT')
+    user_name: ENV.fetch('MAIL_USERNAME', nil),
+    password: ENV.fetch('MAIL_PASSWORD', nil),
+    address: ENV.fetch('MAIL_ADDRESS', nil),
+    host: ENV.fetch('MAIL_HOST', nil),
+    port: ENV.fetch('MAIL_PORT', nil)
   }
 
   # Print deprecation notices to the Rails logger.

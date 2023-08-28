@@ -12,14 +12,13 @@ autoload :ApplicationContainer, './app/lib/application_container'
 module RailsProject66
   class Application < Rails::Application
     DEFAULT_HOST_URL = ENV.fetch("DEFAULT_HOST_URL_#{Rails.env.upcase}", 'http://127.0.0.1:3000')
+    routes.default_url_options = { host: DEFAULT_HOST_URL }
 
     # Initialize configuration defaults for originally generated Rails version.
     config.i18n.default_locale = :ru
     config.load_defaults 7.0
     config.use_instantiated_fixtures = false
     config.use_transactional_fixtures = true
-
-    routes.default_url_options = { host: ENV.fetch('BASE_URL', nil) }
 
     # Configuration for the application, engines, and railties goes here.
     # These settings can be overridden in specific environments using the files
