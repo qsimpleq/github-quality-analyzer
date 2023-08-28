@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_28_114339) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_28_123241) do
   create_table "repositories", force: :cascade do |t|
     t.integer "github_id"
     t.string "name"
@@ -30,14 +30,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_28_114339) do
   create_table "repository_checks", force: :cascade do |t|
     t.integer "repository_id", null: false
     t.boolean "check_passed", default: false
-    t.string "state", default: "created", null: false
+    t.string "aasm_state", default: "created", null: false
     t.string "commit_id"
     t.integer "offense_count"
     t.json "check_result"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["aasm_state"], name: "index_repository_checks_on_aasm_state"
     t.index ["repository_id"], name: "index_repository_checks_on_repository_id"
-    t.index ["state"], name: "index_repository_checks_on_state"
   end
 
   create_table "users", force: :cascade do |t|

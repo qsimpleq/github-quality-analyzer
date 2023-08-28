@@ -9,7 +9,7 @@
         td = I18n.l(@repository.created_at, format: :default)
       tr
         td = t('.status')
-        td = t("activerecord.attributes.check.states.#{@check.state}")
+        td = t("activerecord.attributes.check.states.#{@check.aasm_state}")
       tr
         td = t('.check_passed')
         td = @check.check_passed

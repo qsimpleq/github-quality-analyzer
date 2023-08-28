@@ -67,7 +67,7 @@ module Web
       perform_enqueued_jobs
 
       check = @repo.checks.last
-      assert { check.state == 'finished' }
+      assert { check.aasm_state == 'finished' }
       assert { check.offense_count.zero? }
       assert { check.check_passed }
     end
@@ -86,7 +86,7 @@ module Web
       perform_enqueued_jobs
 
       check = @repo.checks.last
-      assert { check.state == 'finished' }
+      assert { check.aasm_state == 'finished' }
       assert { check.offense_count.positive? }
       assert_not check.check_passed
     end

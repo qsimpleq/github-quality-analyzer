@@ -4,14 +4,14 @@
 class CheckMailerPreview < ActionMailer::Preview
   def lint_with_offenses
     CheckMailer.with(
-      check: Repository::Check.where(state: :finished, check_passed: false).first,
+      check: Repository::Check.where(aasm_state: :finished, check_passed: false).first,
       error: "Wrong linter parameters\n\nExit code: 12\n\n"
     ).lint_with_offenses
   end
 
   def lint_failed
     CheckMailer.with(
-      check: Repository::Check.where(state: :failed, check_passed: false).first
+      check: Repository::Check.where(aasm_state: :failed, check_passed: false).first
     ).lint_failed
   end
 end

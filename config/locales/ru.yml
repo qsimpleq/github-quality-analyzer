@@ -79,7 +79,7 @@ ru:
         created_at: Дата создания
         language: Язык
         name: Название
-        state: Статус
+        aasm_state: Статус
         updated_at: Дата обновления
 
   check_mailer:
