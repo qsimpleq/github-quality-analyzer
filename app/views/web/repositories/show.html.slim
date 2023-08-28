@@ -24,7 +24,7 @@ hr
       th[scope="col"]
       th[scope="col"] = t('.state')
       th[scope="col"] = t('.commit_id')
-      th[scope="col"] = t('.check_passed')
+      th[scope="col"] = t('.passed')
       th[scope="col"] = t('.created_at')
     tbody
       - @repository.checks.order(id: :desc).each do |check|
@@ -32,5 +32,5 @@ hr
           td = link_to check.id, repository_check_path(@repository.id, check.id)
           td = t("activerecord.attributes.check.states.#{check.aasm_state}")
           td = link_to check.commit_id, "#{@repository.url}/commit/#{check.commit_id}"
-          td = check.check_passed
+          td = check.passed
           td = I18n.l(check.created_at, format: :short)

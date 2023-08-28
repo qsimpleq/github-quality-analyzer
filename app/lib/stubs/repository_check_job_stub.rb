@@ -35,7 +35,7 @@ module Stubs
 
       @check.offense_count = offense_count(result)
       @check.check_result = result_json
-      @check.check_passed = true if @check.offense_count.zero?
+      @check.passed = true if @check.offense_count.zero?
 
       self
     end

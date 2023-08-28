@@ -69,7 +69,7 @@ module Web
       check = @repo.checks.last
       assert { check.aasm_state == 'finished' }
       assert { check.offense_count.zero? }
-      assert { check.check_passed }
+      assert { check.passed }
     end
 
     test '#check javascript' do
@@ -88,7 +88,7 @@ module Web
       check = @repo.checks.last
       assert { check.aasm_state == 'finished' }
       assert { check.offense_count.positive? }
-      assert_not check.check_passed
+      assert_not check.passed
     end
   end
 end

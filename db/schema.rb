@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_28_123241) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_28_125802) do
   create_table "repositories", force: :cascade do |t|
     t.integer "github_id"
     t.string "name"
@@ -29,7 +29,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_28_123241) do
 
   create_table "repository_checks", force: :cascade do |t|
     t.integer "repository_id", null: false
-    t.boolean "check_passed", default: false
+    t.boolean "passed", default: false
     t.string "aasm_state", default: "created", null: false
     t.string "commit_id"
     t.integer "offense_count"

@@ -67,7 +67,7 @@ class RepositoryCheckJob < ApplicationJob
     result = @linter.parse or return
     @check.offense_count = @linter.offense_count
     @check.check_result = JSON.generate(result)
-    @check.check_passed = true if @check.offense_count.zero?
+    @check.passed = true if @check.offense_count.zero?
     self
   end
 

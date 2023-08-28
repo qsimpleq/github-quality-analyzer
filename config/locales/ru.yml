@@ -51,7 +51,7 @@ ru:
           check_started: Проверка запущена
         show:
           check: Проверка
-          check_passed: Проверка пройдена
+          passed: Проверка пройдена
           commit_id: ID коммита
           created_at: Дата создания
           line_column: Строка и символ
@@ -74,7 +74,7 @@ ru:
         name: Название
       show:
         check: Проверить
-        check_passed: Проверка пройдена?
+        passed: Проверка пройдена?
         commit_id: ID коммита
         created_at: Дата создания
         language: Язык

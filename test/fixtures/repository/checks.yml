@@ -4,9 +4,9 @@
 #
 #  id            :integer          not null, primary key
 #  aasm_state    :string           default("created"), not null
-#  check_passed  :boolean          default(FALSE)
 #  check_result  :json
 #  offense_count :integer
+#  passed        :boolean          default(FALSE)
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #  commit_id     :string
