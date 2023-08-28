@@ -4,8 +4,8 @@
     = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
 
     = f.input :github_id, as: :select,
-            label: 'Github',
+            label: t('.title'),
             required: true,
             collection: @available_repositories.sort_by { |a| a[:full_name] } \
                                                .map { [_1[:full_name], _1[:id]] }
-    = f.button :submit, class: 'btn-success'
+    = f.button :submit, t('.submit'), class: 'btn-success'

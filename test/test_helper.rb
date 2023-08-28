@@ -17,7 +17,11 @@ OmniAuth.config.test_mode = true
 I18n.locale = :ru
 
 def t(key, **)
-  controller.t(key, **)
+  if respond_to?(:controller)
+    controller.t(key, **)
+  else
+    I18n.t(key, **)
+  end
 end
 
 def fixture_json_load(*, **opts)
