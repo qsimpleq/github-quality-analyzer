@@ -23,7 +23,9 @@ module Web
     def create
       @repository = current_user.repositories.find_or_initialize_by(repository_params)
       @repository.name ||= '-'
+      @repository.full_name ||= '-'
       authorize @repository
+
       if @repository.save
         redis.del(user_repos)
         RepositoryUpdateJob.perform_later(repository: @repository)
