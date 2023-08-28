@@ -5,6 +5,7 @@
 # Table name: repositories
 #
 #  id              :integer          not null, primary key
+#  full_name       :string
 #  language        :string
 #  name            :string
 #  repo_created_at :datetime

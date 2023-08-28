@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Repository
+class RepositoryPolicy
   class CheckPolicy < ApplicationPolicy
     def show?
       owner?

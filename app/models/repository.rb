@@ -5,6 +5,7 @@
 # Table name: repositories
 #
 #  id              :integer          not null, primary key
+#  full_name       :string
 #  language        :string
 #  name            :string
 #  repo_created_at :datetime
@@ -42,9 +43,5 @@ class Repository < ApplicationRecord
 
   def url
     "https://github.com/#{full_name}"
-  end
-
-  def full_name
-    "#{user.nickname}/#{name}"
   end
 end
