@@ -39,6 +39,13 @@ gem 'omniauth-github'
 gem 'omniauth-rails_csrf_protection'
 gem 'pundit'
 gem 'ransack' # Object-based searching for Active Record
+gem 'rubocop', require: false
+gem 'rubocop-capybara', require: false
+gem 'rubocop-minitest', require: false
+gem 'rubocop-performance', require: false
+gem 'rubocop-rails', require: false
+gem 'rubocop-rake', require: false
+gem 'rubocop-slim', require: false
 gem 'sentry-rails'
 gem 'sentry-ruby'
 gem 'simple_form'
@@ -56,13 +63,6 @@ group :development, :test do
   gem 'fakeredis'
   gem 'html2slim', github: 'slim-template/html2slim'
   gem 'i18n-tasks', require: false
-  gem 'rubocop', require: false
-  gem 'rubocop-capybara', require: false
-  gem 'rubocop-minitest', require: false
-  gem 'rubocop-performance', require: false
-  gem 'rubocop-rails', require: false
-  gem 'rubocop-rake', require: false
-  gem 'rubocop-slim', require: false
   gem 'slim_lint', require: false
   gem 'sqlite3', '~> 1.4' # Use sqlite3 as the database for Active Record
 end
