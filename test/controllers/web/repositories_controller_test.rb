@@ -87,8 +87,8 @@ module Web
 
       check = @repo.checks.last
       assert { check.aasm_state == 'finished' }
-      assert { check.offense_count.positive? }
-      assert_not check.passed
+      assert { check.offense_count.zero? }
+      assert { check.passed }
     end
   end
 end

@@ -5,7 +5,7 @@ module Stubs
     include Stubs
     attr_reader :language
 
-    JAVASCRIPT_LINT_PATH = Rails.root.join('test/fixtures/files/javascript_lint_with_offences.json')
+    JAVASCRIPT_LINT_PATH = Rails.root.join('test/fixtures/files/javascript_lint.json')
     JAVASCRIPT_REPO_INFO_PATH = Rails.root.join('test/fixtures/files/javascript_repo_info.json')
     RUBY_REPO_INFO_PATH = Rails.root.join('test/fixtures/files/ruby_repo_info.json')
     RUBY_LINT_PATH = Rails.root.join('test/fixtures/files/ruby_lint.json')

@@ -1,0 +1,26 @@
+[
+  {
+    "filePath": "/home/user1/Hexlet/rails-project-66/tmp/repositories/user1/hello-world-js/src/index.js",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": [
+    ]
+  },
+  {
+    "filePath": "/home/user1/Hexlet/rails-project-66/tmp/repositories/user1/hello-world-js/test/index.js",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": [
+    ]
+  }
+]

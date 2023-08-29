@@ -17,6 +17,7 @@ Deployed with self-hosted [dokku](https://dokku.com)
 ## Local development
 ```shell
 make setup
+make envfile
 ```
 Put your github credentials to .env file and run
 ```shell
