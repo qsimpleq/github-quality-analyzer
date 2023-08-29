@@ -39,12 +39,14 @@ gem 'omniauth-github'
 gem 'omniauth-rails_csrf_protection'
 gem 'pundit'
 gem 'ransack' # Object-based searching for Active Record
+gem 'rspec', require: false
 gem 'rubocop', require: false
 gem 'rubocop-capybara', require: false
 gem 'rubocop-minitest', require: false
 gem 'rubocop-performance', require: false
 gem 'rubocop-rails', require: false
 gem 'rubocop-rake', require: false
+gem 'rubocop-rspec', require: false
 gem 'rubocop-slim', require: false
 gem 'sentry-rails'
 gem 'sentry-ruby'
