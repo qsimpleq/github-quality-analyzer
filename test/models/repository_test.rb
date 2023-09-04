@@ -19,10 +19,7 @@
 #
 # Indexes
 #
-#  index_repositories_on_github_id  (github_id)
-#  index_repositories_on_language   (language)
-#  index_repositories_on_name       (name)
-#  index_repositories_on_user_id    (user_id)
+#  index_repositories_on_user_id  (user_id)
 #
 require 'test_helper'
 
