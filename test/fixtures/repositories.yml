@@ -4,10 +4,12 @@
 #
 #  id              :integer          not null, primary key
 #  full_name       :string
+#  git_url         :string
 #  language        :string
 #  name            :string
 #  repo_created_at :datetime
 #  repo_updated_at :datetime
+#  ssh_url         :string
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  github_id       :integer
@@ -28,6 +30,8 @@ repo<%= num %>:
   full_name: user1/repo<%= num %>
   language: <%= num.odd? ? 'ruby' : 'javascript' %>
   github_id: <%= num %>
+  git_url: https://github.com/user1/repo<%= num %>
+  ssh_url: git@github.com:user1/repo<%= num %>.git
   repo_created_at: <%= Faker::Time.between(from: 2.years.ago, to: 1.year.ago, format: :default) %>
   repo_updated_at: <%= Faker::Time.between(from: 1.year.ago, to: Time.current, format: :default) %>
 <% end %>
