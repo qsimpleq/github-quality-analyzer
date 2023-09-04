@@ -6,6 +6,9 @@
     = f.input :github_id, as: :select,
             label: t('.title'),
             required: true,
+            disabled: @available_repositories.empty? ? true : false,
             collection: @available_repositories.sort_by { |a| a[:full_name] } \
                                                .map { [_1[:full_name], _1[:id]] }
-    = f.button :submit, t('.submit'), class: 'btn-success'
+    - if @available_repositories.empty?
+      .form-text.mb-3 = t('.all_added')
+    = f.button :submit, t('.submit'), class: 'btn-success', disabled: @available_repositories.empty? ? true : false

@@ -10,4 +10,6 @@
         tr
           td = link_to repository.name, repository_path(repository)
           td = repository.language
-          td = repository.checks.last&.passed || false
+          td = repository.checks.any? \
+            ? (repository.checks.last.passed || false) \
+            : t('.not_started')

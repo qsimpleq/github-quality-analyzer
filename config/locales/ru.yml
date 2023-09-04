@@ -64,6 +64,7 @@ ru:
       new:
         title: Github
         submit: Добавить репозиторий
+        all_added: Все репозитории уже добавлены
       create:
         error: Не удалось добавить репозиторий
         success: Репозиторий успешно добавлен
@@ -72,6 +73,7 @@ ru:
         language: Язык
         last_check_status: Статус последней проверки
         name: Название
+        not_started: Проверок ещё не было
       show:
         check: Проверить
         passed: Проверка пройдена?
