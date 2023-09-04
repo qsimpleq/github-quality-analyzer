@@ -10,7 +10,5 @@
         tr
           td = link_to repository.name, repository_path(repository)
           td = repository.language
-          td = repository.checks.any? \
-            ? (repository.checks.last.passed || false) \
-            : t('.not_started')
+          td = repository.checks.any? ? (repository.checks.last.passed || false) : t('.not_started')
   = paginate @repositories
