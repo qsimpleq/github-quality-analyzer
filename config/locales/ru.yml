@@ -7,15 +7,10 @@ ru:
     attributes:
       check:
         states:
-          checked: Репозиторий проверен
           checking: Проверяется репозиторий
           created: Запущена
           failed: Завершена с ошибкой
-          fetched: Репозиторий загружен
-          fetching: Загружается репозиторий
           finished: Завершена
-          parsed: Парсинг результатов завершён
-          parsing: Парсятся результаты линтинга
       user:
         email: Email
         nickname: Ник
@@ -116,4 +111,5 @@ ru:
         language: Язык
         name: Название
         passed: Проверка пройдена?
+        state: Статус
         updated_at: Дата обновления

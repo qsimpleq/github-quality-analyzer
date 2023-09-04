@@ -22,7 +22,7 @@
 #  repository_id  (repository_id => repositories.id)
 #
 
-<% states = %i[created fetching fetched linting linted parsing parsed finished failed].reverse %>
+<% states = %i[created checking finished failed].reverse %>
 
 <% states.each_with_index do |state, index| %>
 <%= state %>:

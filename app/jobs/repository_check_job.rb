@@ -11,23 +11,17 @@ class RepositoryCheckJob < ApplicationJob
     current_user(@repository.user)
     @check = Repository::Check.create(repository: @repository)
 
-    @check.fetch!
+    @check.run_check!
     github_info&.fetch or return failed
-    @check.is_fetched!
 
-    @check.lint!
     unless lint
-      CheckMailer.with(check: @check, error: @linter.result[:error]).lint_failed.deliver_later
+      CheckMailer.with(check: @check, error: @linter.result[:error]).check_failed.deliver_later
       return failed
     end
-    @check.is_linted!
 
-    @check.parse!
     parse or return failed
-    @check.is_parsed!
-
-    @check.finish!
-    CheckMailer.with(check: @check).lint_with_offenses.deliver_later if @check.offense_count.positive?
+    @check.mark_as_finish!
+    CheckMailer.with(check: @check).check_with_offenses.deliver_later if @check.offense_count.positive?
   ensure
     FileUtils.rmtree(@repository.directory)
   end
@@ -72,7 +66,7 @@ class RepositoryCheckJob < ApplicationJob
   end
 
   def failed
-    @check.failed!
+    @check.mark_as_fail!
     false
   end
 end

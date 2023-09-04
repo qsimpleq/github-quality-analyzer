@@ -31,45 +31,18 @@ class Repository
 
     aasm do
       state :created, initial: true
-      state :fetching,
-            :fetched,
-            :linting,
-            :linted,
-            :parsing,
-            :parsed,
-            :finished,
-            :failed
+      state :checking, :finished, :failed
 
-      event :fetch do
-        transitions from: :created, to: :fetching
+      event :run_check do
+        transitions from: :created, to: :checking
       end
 
-      event :is_fetched do
-        transitions from: :fetching, to: :fetched
+      event :mark_as_finish do
+        transitions from: :checking, to: :finished
       end
 
-      event :lint do
-        transitions from: :fetched, to: :linting
-      end
-
-      event :is_linted do
-        transitions from: :linting, to: :linted
-      end
-
-      event :parse do
-        transitions from: :linted, to: :parsing
-      end
-
-      event :is_parsed do
-        transitions from: :parsing, to: :parsed
-      end
-
-      event :finish do
-        transitions from: :parsed, to: :finished
-      end
-
-      event :failed do
-        transitions from: %i[fetching fetched linting linted parsing parsed finished], to: :failed
+      event :mark_as_fail do
+        transitions from: :checking, to: :failed
       end
     end
 
