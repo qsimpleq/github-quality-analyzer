@@ -14,6 +14,8 @@ module RailsProject66
     DEFAULT_HOST_URL = ENV.fetch("DEFAULT_HOST_URL_#{Rails.env.upcase}", 'http://127.0.0.1:3000')
     routes.default_url_options = { host: DEFAULT_HOST_URL }
 
+    config.cache_store = :redis_cache_store, { url: ApplicationContainer[:redis].connection[:id].to_s }
+
     # Initialize configuration defaults for originally generated Rails version.
     config.i18n.default_locale = :ru
     config.load_defaults 7.0

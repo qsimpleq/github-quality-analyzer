@@ -29,7 +29,7 @@ module Web
       authorize @repository
 
       if @repository.save
-        redis.del(user_repos)
+        Rails.cache.delete(user_repos)
         RepositoryUpdateJob.perform_later(repository: @repository)
         redirect_to repositories_path, notice: t('.success')
       else
@@ -55,13 +55,15 @@ module Web
     end
 
     def cached_fetch_repos
-      repos_json = redis.get(user_repos)
-      return JSON.parse(repos_json, symbolize_names: true) if repos_json
+      repos = nil
+      repos_json = Rails.cache.fetch(user_repos, expires_in: ApplicationContainer[:USER_REPOSITORIES_EXPIRE]) do
+        repos = fetch_repos
+        JSON.generate(repos)
+      end
 
-      response = fetch_repos
-      redis.set(user_repos, JSON.generate(response))
-      redis.expire(user_repos, ApplicationContainer[:USER_REPOSITORIES_EXPIRE])
-      response
+      return JSON.parse(repos_json, symbolize_names: true) unless repos
+
+      repos
     end
 
     def select_available_repos(repos)
