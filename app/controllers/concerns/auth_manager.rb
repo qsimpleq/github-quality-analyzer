@@ -24,7 +24,7 @@ module AuthManager
     session[:user_id].present? && current_user.present?
   end
 
-  def require_signed_in_user!
+  def authenticate_user!
     return if current_user.present?
 
     sign_out

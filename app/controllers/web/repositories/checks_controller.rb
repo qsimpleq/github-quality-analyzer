@@ -3,7 +3,7 @@
 module Web
   module Repositories
     class ChecksController < Web::Repositories::ApplicationController
-      before_action :require_signed_in_user!
+      before_action :authenticate_user!
       before_action :set_repository
 
       def show

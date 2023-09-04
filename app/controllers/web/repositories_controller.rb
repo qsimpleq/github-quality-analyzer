@@ -2,7 +2,7 @@
 
 module Web
   class RepositoriesController < Web::ApplicationController
-    before_action :require_signed_in_user!
+    before_action :authenticate_user!
 
     def index
       authorize Repository
