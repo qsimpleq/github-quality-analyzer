@@ -26,7 +26,7 @@ module Api
       return render_json :not_found if repository.nil?
       return render_json :conflict if repository.checks.last&.in_process?
 
-      ApplicationContainer[:repository_check_job].perform_later(repository:)
+      ApplicationContainer[:repository_check_job].perform_later(repository)
 
       render_json :ok
     end

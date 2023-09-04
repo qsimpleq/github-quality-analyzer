@@ -30,7 +30,7 @@ module Web
 
       if @repository.save
         Rails.cache.delete(user_repos)
-        RepositoryUpdateJob.perform_later(repository: @repository)
+        RepositoryUpdateJob.perform_later(@repository)
         redirect_to repositories_path, notice: t('.success')
       else
         redirect_to new_repository_path, alert: t('.error')

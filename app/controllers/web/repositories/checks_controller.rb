@@ -20,7 +20,7 @@ module Web
           return redirect_to repository_path(@repository), alert: t('.last_in_process')
         end
 
-        ApplicationContainer[:repository_check_job].perform_later(repository: @repository)
+        ApplicationContainer[:repository_check_job].perform_later(@repository)
         redirect_to repository_path(@repository), notice: t('.check_started')
       end
 

@@ -30,7 +30,7 @@ module Web
 
       repository = Repository.last
 
-      assert_enqueued_with(job: RepositoryUpdateJob, args: [{ repository: }])
+      assert_enqueued_with(job: RepositoryUpdateJob, args: [repository])
       perform_enqueued_jobs
 
       github_repo = octokit.repo(github_id)
@@ -63,7 +63,7 @@ module Web
       assert_redirected_to repository_path(@repo)
       assert_equal flash[:notice], t('.check_started')
 
-      assert_enqueued_with(job: ApplicationContainer[:repository_check_job], args: [{ repository: @repo }])
+      assert_enqueued_with(job: ApplicationContainer[:repository_check_job], args: [@repo])
       perform_enqueued_jobs
 
       check = @repo.checks.last
@@ -74,6 +74,7 @@ module Web
 
     test '#check javascript' do
       @repo = repositories(:repo2)
+
       assert_equal('javascript', @repo.language)
 
       get repository_path(@repo)
@@ -82,7 +83,7 @@ module Web
       assert_redirected_to repository_path(@repo)
       assert_equal flash[:notice], t('.check_started')
 
-      assert_enqueued_with(job: ApplicationContainer[:repository_check_job], args: [{ repository: @repo }])
+      assert_enqueued_with(job: ApplicationContainer[:repository_check_job], args: [@repo])
       perform_enqueued_jobs
 
       check = @repo.checks.last

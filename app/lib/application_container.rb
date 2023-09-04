@@ -19,8 +19,10 @@ class ApplicationContainer
     autoload :Stubs, Rails.root.join('app/lib/stubs')
     register :octokit, -> { Stubs::OctokitClientStub }
     register :repository_check_job, -> { Stubs::RepositoryCheckJobStub }
+    register :repository_check_service, -> { Stubs::RepositoryCheckServiceStub }
   else
     register :octokit, -> { Octokit::Client }
     register :repository_check_job, -> { RepositoryCheckJob }
+    register :repository_check_service, -> { RepositoryCheckService }
   end
 end
