@@ -7,7 +7,9 @@
 #  id         :integer          not null, primary key
 #  email      :string
 #  nickname   :string
+#  provider   :string
 #  token      :string
+#  uid        :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #

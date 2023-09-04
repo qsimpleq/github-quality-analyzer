@@ -7,7 +7,9 @@
 #  id         :integer          not null, primary key
 #  email      :string
 #  nickname   :string
+#  provider   :string
 #  token      :string
+#  uid        :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
@@ -20,4 +22,9 @@ class User < ApplicationRecord
   validates :email, presence: true
   validates :nickname, presence: false
   validates :token, presence: false
+  validates :provider,
+            presence: true,
+            uniqueness: { scope: [:uid] },
+            inclusion: { in: %w[github] }
+  validates :uid, presence: true
 end

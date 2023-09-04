@@ -5,7 +5,9 @@
 #  id         :integer          not null, primary key
 #  email      :string
 #  nickname   :string
+#  provider   :string
 #  token      :string
+#  uid        :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
@@ -16,6 +18,8 @@
 
 <% (1..2).each do |num| %>
 user<%= num %>:
+  provider: github
+  uid: <%= num %>
   nickname: user<%= num %>
   email: user<%= num %>@example.com
 <% end %>

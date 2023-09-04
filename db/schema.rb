@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_04_091035) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_04_092947) do
   create_table "repositories", force: :cascade do |t|
     t.integer "github_id"
     t.string "name"
@@ -45,6 +45,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_04_091035) do
     t.string "token"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "uid"
+    t.string "provider"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 

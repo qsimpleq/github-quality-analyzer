@@ -49,7 +49,9 @@ def mock_omniauth(user, _options = {})
     info: {
       email: user.email,
       nickname: user.nickname
-    }
+    },
+    provider: 'github',
+    uid: '12345'
   }
 
   OmniAuth.config.mock_auth[:github] = OmniAuth::AuthHash::InfoHash.new(auth_hash)

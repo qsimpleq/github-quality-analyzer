@@ -9,6 +9,8 @@ module Web
       user = User.find_or_initialize_by(email: auth_params[:email])
       user.nickname = auth_params[:nickname]
       user.token = auth_params[:token]
+      user.provider = auth_params[:provider]
+      user.uid = auth_params[:uid]
 
       if user.save
         sign_in user
@@ -30,7 +32,9 @@ module Web
       {
         email: auth['info']['email'],
         nickname: auth['info']['nickname'],
-        token: auth['credentials']['token']
+        token: auth['credentials']['token'],
+        provider: auth['provider'],
+        uid: auth['uid']
       }
     end
   end
