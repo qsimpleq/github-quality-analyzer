@@ -13,3 +13,4 @@
           td = repository.checks.any? \
             ? (repository.checks.last.passed || false) \
             : t('.not_started')
+  = paginate @repositories
