@@ -8,12 +8,14 @@ module Web
 
       def show
         authorize @repository
+
         @check = @repository.checks.find(params[:id])
         @check_result = @check.check_result.nil? ? nil : JSON.parse(@check.check_result, symbolize_names: true)
       end
 
       def create
         authorize @repository
+
         if @repository.checks&.last&.in_process?
           return redirect_to repository_path(@repository), alert: t('.last_in_process')
         end

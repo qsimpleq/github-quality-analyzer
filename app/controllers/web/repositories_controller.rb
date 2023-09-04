@@ -6,6 +6,7 @@ module Web
 
     def index
       authorize Repository
+
       @repositories = current_user.repositories.order(name: :asc)
     end
 
@@ -17,6 +18,7 @@ module Web
     def new
       @repository = Repository.new
       authorize @repository
+
       @available_repositories = select_available_repos(cached_fetch_repos)
     end
 
