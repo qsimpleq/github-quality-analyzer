@@ -23,6 +23,7 @@
 #
 class Repository < ApplicationRecord
   extend Enumerize
+
   belongs_to :user, inverse_of: :repositories
   has_many :checks, dependent: :destroy
 
@@ -41,6 +42,6 @@ class Repository < ApplicationRecord
   end
 
   def url
-    "https://github.com/#{full_name}"
+    "#{ENV.fetch('USER_PROVIDER_URL', 'https://github.com')}/#{full_name}"
   end
 end

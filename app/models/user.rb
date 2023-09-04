@@ -18,7 +18,7 @@
 #  index_users_on_email  (email) UNIQUE
 #
 class User < ApplicationRecord
-  has_many :repositories, inverse_of: :user, dependent: :nullify
+  has_many :repositories, inverse_of: :user, dependent: :destroy
   validates :email, presence: true
   validates :nickname, presence: false
   validates :token, presence: false
