@@ -47,7 +47,7 @@ class RepositoryCheckService < ApplicationService
   end
 
   def lint
-    @linter = Repository::Linter.new(@repository)
+    @linter = Linters.new(@repository)
     @linter.lint
     return unless @linter.lint
 
