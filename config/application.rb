@@ -11,7 +11,7 @@ autoload :ApplicationContainer, './app/lib/application_container'
 
 module RailsProject66
   class Application < Rails::Application
-    config.autoload_paths << Rails.root.join('services').to_s
+    config.autoload_paths << Rails.root.join('app/services').to_s
 
     DEFAULT_HOST_URL = ENV.fetch("DEFAULT_HOST_URL_#{Rails.env.upcase}", 'http://127.0.0.1:3000')
     routes.default_url_options = { host: DEFAULT_HOST_URL }
