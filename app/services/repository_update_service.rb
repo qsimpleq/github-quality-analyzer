@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
-class RepositoryUpdateService < ApplicationService
+class RepositoryUpdateService
+  include AnyClients
   def perform(repository)
     data = octokit(repository.user).repo(repository.github_id)
 

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
-class RepositoryCheckService < ApplicationService
+class RepositoryCheckService
+  include AnyClients
+
   attr_reader :repository, :check, :linter
 
   def perform(repository)
