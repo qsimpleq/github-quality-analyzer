@@ -6,7 +6,6 @@ class RepositoryCheckService
   attr_reader :repository, :check, :linter
 
   def perform(repository)
-    current_user(repository.user)
     @repository = repository
     @check = Repository::Check.create(repository:)
 
@@ -49,7 +48,7 @@ class RepositoryCheckService
   end
 
   def lint
-    @linter = Linters.new(@repository)
+    @linter = LintRepositoryService.new(@repository)
     @linter.lint
     return unless @linter.lint
 

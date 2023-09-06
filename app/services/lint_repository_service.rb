@@ -2,12 +2,12 @@
 
 require 'open3'
 
-class Linters
+class LintRepositoryService
   attr_reader :linter, :repository, :json_result, :parse_result, :result, :offense_count
 
   def initialize(repository)
     @repository = repository
-    @linter = "Linters::#{repository.language.capitalize}".constantize.new(repository)
+    @linter = "Lint#{repository.language.capitalize}Service".constantize.new(repository)
   end
 
   def lint
