@@ -45,9 +45,5 @@ class Repository
         transitions from: :checking, to: :failed
       end
     end
-
-    def in_process?
-      !finished? && !failed?
-    end
   end
 end

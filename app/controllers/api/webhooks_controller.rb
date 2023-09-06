@@ -24,7 +24,7 @@ module Api
     def push(github_id)
       repository = Repository.find_by(github_id:)
       return render_json :not_found if repository.nil?
-      return render_json :conflict if repository.checks.last&.in_process?
+      return render_json :conflict if repository.checks.last&.checking?
 
       ApplicationContainer[:repository_check_job].perform_later(repository)
 

@@ -16,7 +16,7 @@ module Web
       def create
         authorize @repository
 
-        if @repository.checks&.last&.in_process?
+        if @repository.checks&.last&.checking?
           return redirect_to repository_path(@repository), alert: t('.last_in_process')
         end
 
