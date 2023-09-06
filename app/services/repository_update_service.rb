@@ -2,8 +2,7 @@
 
 class RepositoryUpdateService < ApplicationService
   def perform(repository)
-    current_user(repository.user)
-    data = octokit.repo(repository.github_id)
+    data = octokit(repository.user).repo(repository.github_id)
 
     return false if data.nil?
 

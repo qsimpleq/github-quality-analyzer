@@ -24,7 +24,7 @@ class RepositoryCheckService < ApplicationService
   end
 
   def github_info
-    @github_info = octokit.repo(repository.github_id)
+    @github_info = octokit(@repository.user).repo(repository.github_id)
     return if @github_info.nil?
 
     self

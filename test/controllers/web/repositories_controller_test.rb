@@ -33,7 +33,7 @@ module Web
       assert_enqueued_with(job: RepositoryUpdateJob, args: [repository])
       perform_enqueued_jobs
 
-      github_repo = octokit.repo(github_id)
+      github_repo = octokit(current_user).repo(github_id)
       repository.reload
       assert { repository.url == github_repo[:html_url] }
       assert { repository.name == github_repo[:name] }
