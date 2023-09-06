@@ -1,36 +1,50 @@
 # frozen_string_literal: true
 
+require 'open3'
+
 class LintJavascriptService
-  attr_reader :repository, :json_result, :result, :offense_count
+  attr_reader :repository, :json_result, :parsed_result, :result, :offense_count
 
   def initialize(repository)
     @repository = repository
+    @offense_count = 0
+    @parsed_result = []
   end
 
-  def lint
-    lint_options = [
-      select_config,
-      '--format json'
-    ]
-
+  def perform
     command = "yarn run eslint #{lint_options.join(' ')} #{@repository.directory}"
-  ensure
     stdout, stderr, status = Open3.capture3(command)
 
     @result = { status: status.exitstatus }
     if @result[:status] > 1 && stderr
       @result[:error] = stderr
-    else
-      @json_result = stdout.split("\n")[2]
-      @result[:result] = JSON.parse(@json_result, symbolize_names: true)
+      return false
     end
 
-    self
+    @json_result = stdout.split("\n")[2]
+    @result[:result] = JSON.parse(@json_result, symbolize_names: true)
+    parse_result
   end
 
-  def parse
-    @offense_count = 0
-    @result[:result].reject { _1[:messages].empty? }.map do |file|
+  private
+
+  def find_config
+    repository_config = "#{@repository.directory}/.eslintrc"
+    ext = %w[js json yml].find { File.exist?("#{repository_config}.#{_1}") }
+    return unless ext
+
+    "#{repository_config}.#{ext}"
+  end
+
+  def lint_options
+    config_path = find_config
+    config = config_path ? "--config #{config_path}" : '--no-eslintrc'
+
+    [config, '--format json']
+  end
+
+  def parse_result
+    @parsed_result = @result[:result].reject { _1[:messages].empty? }.map do |file|
       offenses = file[:messages].map do |offence|
         @offense_count += 1
         {
@@ -42,25 +56,8 @@ class LintJavascriptService
       end
       { path: file[:filePath].delete_prefix("#{@repository.directory}/"), offenses: }
     end
-  end
-
-  private
-
-  def select_config
-    config = find_config
-
-    if config
-      "--config #{config}"
-    else
-      '--no-eslintrc'
-    end
-  end
-
-  def find_config
-    repository_config = "#{@repository.directory}/.eslintrc"
-    ext = %w[js json yml].find { File.exist?("#{repository_config}.#{_1}") }
-    return unless ext
-
-    "#{repository_config}.#{ext}"
+    true
+  rescue StandardError
+    false
   end
 end

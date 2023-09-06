@@ -2,7 +2,12 @@
 
 class RepositoryUpdateService
   include AnyClients
-  def perform(repository)
+
+  def initialize(repository)
+    @repository = repository
+  end
+
+  def perform
     data = octokit(repository.user).repo(repository.github_id)
 
     return false if data.nil?
@@ -16,5 +21,7 @@ class RepositoryUpdateService
       repo_updated_at: data[:updated_at],
       ssh_url: data[:ssh_url]
     )
+
+    true
   end
 end

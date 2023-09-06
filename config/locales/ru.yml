@@ -23,7 +23,7 @@ ru:
   application_policy:
     resolve: 'Вы должны объявить метод #resolve в %{class}'
   check_mailer:
-    lint_failed:
+    check_failed:
       content:
       - "%{user_name}, проверка репозитория %{repo_url} линтером не удалась"
       - 'Результаты по ссылке: %{check_url}'
@@ -36,7 +36,7 @@ ru:
       - 'Текст ошибки:'
       - "%{error}"
       subject: Проверка репозитория %{repo_name} линтером не удалась
-    lint_with_offenses:
+    check_with_offenses:
       content:
       - "%{user_name}, проверка репозитория %{repo_url} завершилась: Найдены ошибки!"
       - 'Результаты по ссылке: %{check_url}'

@@ -3,17 +3,17 @@
 class CheckMailer < ApplicationMailer
   include Rails.application.routes.url_helpers
 
-  def lint_failed
-    linter_mail
+  def check_failed
+    check_mail
   end
 
-  def lint_with_offenses
-    linter_mail
+  def check_with_offenses
+    check_mail
   end
 
   private
 
-  def linter_mail
+  def check_mail
     @check = params[:check]
     @error = params[:error]
     @repository = @check.repository

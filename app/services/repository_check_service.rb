@@ -3,32 +3,36 @@
 class RepositoryCheckService
   include AnyClients
 
-  attr_reader :repository, :check, :linter
+  attr_reader :repository, :linter
 
-  def perform(repository)
+  def initialize(repository)
     @repository = repository
-    @check = Repository::Check.create(repository:)
+    @check = Repository::Check.create(repository: @repository)
+    @linter = LintRepositoryService.new(@repository)
+  end
 
+  def perform
     @check.run_check!
-    github_info&.fetch or return failed
-
-    unless lint
+    unless github_info && fetch && check
       CheckMailer.with(check: @check, error: @linter.result[:error]).check_failed.deliver_later
-      return failed
+      @check.mark_as_fail!
+      return false
     end
 
-    parse or return failed
     @check.mark_as_finish!
     CheckMailer.with(check: @check).check_with_offenses.deliver_later if @check.offense_count.positive?
+    true
   ensure
     FileUtils.rmtree(@repository.directory)
   end
 
+  private
+
   def github_info
     @github_info = octokit(@repository.user).repo(repository.github_id)
-    return if @github_info.nil?
+    return false if @github_info.nil?
 
-    self
+    true
   end
 
   def fetch
@@ -38,33 +42,21 @@ class RepositoryCheckService
     begin
       git = Git.clone(@github_info[:clone_url], nil, depth: 1)
       @check.commit_id = git.log.first.sha[0, 7]
-
-      self
+      true
     rescue Git::FailedError
-      nil
+      false
     end
   ensure
     Dir.chdir(Rails.root)
   end
 
-  def lint
-    @linter = LintRepositoryService.new(@repository)
-    @linter.lint
-    return unless @linter.lint
+  def check
+    return false unless @linter.perform
 
-    self
-  end
-
-  def parse
-    result = @linter.parse or return
     @check.offense_count = @linter.offense_count
-    @check.check_result = JSON.generate(result)
+    @check.check_result = JSON.generate(@linter.parsed_result)
     @check.passed = true if @check.offense_count.zero?
-    self
-  end
 
-  def failed
-    @check.mark_as_fail!
-    false
+    true
   end
 end
