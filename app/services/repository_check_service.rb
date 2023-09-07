@@ -30,7 +30,7 @@ class RepositoryCheckService
   private
 
   def github_info
-    @github_info = octokit(@repository.user).repo(repository.github_id)
+    @github_info ||= octokit(@repository.user).repo(repository.github_id)
     if @github_info.nil?
       @error = I18n.t('services.repository_check_service.github_info_error')
       return false
