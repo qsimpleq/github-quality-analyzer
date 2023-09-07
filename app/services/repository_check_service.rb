@@ -3,7 +3,7 @@
 class RepositoryCheckService
   include AnyClients
 
-  attr_reader :repository, :linter
+  attr_reader :repository, :linter, :error
 
   def initialize(repository)
     @repository = repository
@@ -14,7 +14,7 @@ class RepositoryCheckService
   def perform
     @check.run_check!
     unless github_info && fetch && check
-      CheckMailer.with(check: @check, error: @linter.result[:error]).check_failed.deliver_later
+      CheckMailer.with(check: @check, error: @error).check_failed.deliver_later
       @check.mark_as_fail!
       return false
     end
@@ -31,7 +31,10 @@ class RepositoryCheckService
 
   def github_info
     @github_info = octokit(@repository.user).repo(repository.github_id)
-    return false if @github_info.nil?
+    if @github_info.nil?
+      @error = I18n.t('services.repository_check_service.github_info_error')
+      return false
+    end
 
     true
   end
@@ -45,6 +48,7 @@ class RepositoryCheckService
       @check.commit_id = git.log.first.sha[0, 7]
       true
     rescue Git::FailedError
+      @error = I18n.t('services.repository_check_service.git_clone_error')
       false
     end
   ensure
@@ -52,7 +56,10 @@ class RepositoryCheckService
   end
 
   def check
-    return false unless @linter.perform
+    unless @linter.perform
+      @error = @linter.result[:error]
+      return false
+    end
 
     @check.offense_count = @linter.offense_count
     @check.check_result = JSON.generate(@linter.parsed_result)

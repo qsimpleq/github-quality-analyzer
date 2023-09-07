@@ -52,6 +52,10 @@ ru:
         repositories: Репозитории
   pundit:
     default: Вы должны быть авторизованы
+  services:
+    repository_check_service:
+      git_clone_error: Не удалось склонировать репозиторий
+      github_info_error: Не удалось получить информацию о репозитории
   views:
     pagination:
       first: "&laquo;"

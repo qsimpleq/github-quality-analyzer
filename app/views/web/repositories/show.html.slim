@@ -31,6 +31,10 @@ hr
         tr
           td = link_to check.id, repository_check_path(@repository.id, check.id)
           td = t("activerecord.attributes.check.states.#{check.aasm_state}")
-          td = link_to check.commit_id, "#{@repository.url}/commit/#{check.commit_id}"
+          td
+            - if check.commit_id
+              = link_to check.commit_id, "#{@repository.url}/commit/#{check.commit_id}"
+            - else
+              | -
           td = check.passed
           td = I18n.l(check.created_at, format: :short)
