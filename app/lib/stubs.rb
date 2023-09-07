@@ -1,6 +1,15 @@
 # frozen_string_literal: true
 
 module Stubs
+  REPOSITORY = {
+    commit_id: '9340a54',
+    javascript_lint_path: Rails.root.join('test/fixtures/files/javascript_lint.json'),
+    javascript_repo_info_path: Rails.root.join('test/fixtures/files/javascript_repo_info.json'),
+    octokit_repositories_path: Rails.root.join('test/fixtures/files/octokit_repositories.json'),
+    ruby_lint_path: Rails.root.join('test/fixtures/files/ruby_lint.json'),
+    ruby_repo_info_path: Rails.root.join('test/fixtures/files/ruby_repo_info.json')
+  }.freeze
+
   private
 
   def load_json_fixture(path)

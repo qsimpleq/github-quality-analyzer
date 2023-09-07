@@ -4,6 +4,6 @@ class RepositoryUpdateJob < ApplicationJob
   queue_as :default
 
   def perform(repository)
-    RepositoryUpdateService.new(repository).perform
+    ApplicationContainer[:repository_update_service].new(repository).perform
   end
 end

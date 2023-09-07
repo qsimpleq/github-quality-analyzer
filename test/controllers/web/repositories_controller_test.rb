@@ -21,7 +21,7 @@ module Web
     end
 
     test '#create success' do
-      github_id = 653_617_057
+      github_id = 678_433_960
       post repositories_path(repository: { github_id: })
 
       assert_redirected_to repositories_path
@@ -35,6 +35,7 @@ module Web
 
       github_repo = octokit(current_user).repo(github_id)
       repository.reload
+
       assert { repository.url == github_repo[:html_url] }
       assert { repository.name == github_repo[:name] }
       assert { repository.language == github_repo[:language].downcase }

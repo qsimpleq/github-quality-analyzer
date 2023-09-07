@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
-class UserRepositoriesService < ApplicationService
+class UserRepositoriesService
   def perform(repository); end
 end

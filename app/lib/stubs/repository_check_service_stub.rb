@@ -5,39 +5,24 @@ module Stubs
     include Stubs
     attr_reader :language
 
-    JAVASCRIPT_LINT_PATH = Rails.root.join('test/fixtures/files/javascript_lint.json')
-    JAVASCRIPT_REPO_INFO_PATH = Rails.root.join('test/fixtures/files/javascript_repo_info.json')
-    RUBY_REPO_INFO_PATH = Rails.root.join('test/fixtures/files/ruby_repo_info.json')
-    RUBY_LINT_PATH = Rails.root.join('test/fixtures/files/ruby_lint.json')
-    COMMIT_ID = '9340a54'
-
-    def github_info
+    def initialize(repository)
+      super
       @language = @repository.language
-      @repo_info = "Stubs::RepositoryCheckJobStub::#{@language.upcase}_REPO_INFO_PATH".constantize
-      @repo_lint = "Stubs::RepositoryCheckJobStub::#{@language.upcase}_LINT_PATH".constantize
+      @repo_lint = Stubs::REPOSITORY["#{@language.downcase}_lint_path".to_sym]
+      @repo_info = Stubs::REPOSITORY["#{@language.downcase}_repo_info_path".to_sym]
       @github_info = load_json_fixture(@repo_info)
-      self
     end
 
-    def fetch
-      @check.commit_id = COMMIT_ID
-
-      self
-    end
-
-    def lint
-      self
-    end
-
-    def parse
+    def perform
       result_json = load_fixture(@repo_lint)
       result = load_json_fixture(@repo_lint)
 
+      @check.run_check!
+      @check.commit_id = Stubs::REPOSITORY[:commit_id]
       @check.offense_count = offense_count(result)
       @check.check_result = result_json
       @check.passed = true if @check.offense_count.zero?
-
-      self
+      @check.mark_as_finish!
     end
 
     private

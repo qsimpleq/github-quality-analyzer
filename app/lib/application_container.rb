@@ -4,7 +4,6 @@ class ApplicationContainer
   extend Dry::Container::Mixin
 
   register :USER_REPOSITORIES_EXPIRE, -> { ENV.fetch('USER_REPOSITORIES_EXPIRE', 10.minutes) }
-
   register :redis do
     @register_redis ||= ConnectionPool::Wrapper.new do
       if Rails.env.production?
@@ -14,15 +13,16 @@ class ApplicationContainer
       end
     end
   end
+  register :repository_check_job, -> { RepositoryCheckJob }
 
   if Rails.env.test?
     autoload :Stubs, Rails.root.join('app/lib/stubs')
     register :octokit, -> { Stubs::OctokitClientStub }
-    register :repository_check_job, -> { Stubs::RepositoryCheckJobStub }
     register :repository_check_service, -> { Stubs::RepositoryCheckServiceStub }
+    register :repository_update_service, -> { Stubs::RepositoryUpdateServiceStub }
   else
     register :octokit, -> { Octokit::Client }
-    register :repository_check_job, -> { RepositoryCheckJob }
     register :repository_check_service, -> { RepositoryCheckService }
+    register :repository_update_service, -> { RepositoryUpdateService }
   end
 end

@@ -5,19 +5,17 @@ module Stubs
     include Stubs
     attr_reader :octokit_repositories, :last_response
 
-    OCTOKIT_REPOSITORIES_PATH = Rails.root.join('test/fixtures/files/octokit_repositories.json')
-
     def initialize(*)
       @last_response = nil
     end
 
     def repos
-      result = load_json_fixture(OCTOKIT_REPOSITORIES_PATH)
+      result = load_json_fixture(Stubs::REPOSITORY[:octokit_repositories_path])
       set_last_response(result)
     end
 
     def repo(github_id)
-      result = load_json_fixture(OCTOKIT_REPOSITORIES_PATH).find { _1[:id] == github_id }
+      result = load_json_fixture(Stubs::REPOSITORY[:octokit_repositories_path]).find { _1[:id] == github_id }
       set_last_response(result)
     end
 
