@@ -25,7 +25,7 @@ class FetchRepositoriesService
   end
 
   def exists?
-    Rails.cache.exists?(user_repos)
+    Rails.cache.exist?(user_repos)
   end
 
   private
