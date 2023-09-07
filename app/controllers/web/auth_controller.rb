@@ -13,7 +13,8 @@ module Web
       user.uid = auth_params[:uid]
 
       if user.save
-        sign_in user
+        sign_in(user)
+        prefetch_repos
         redirect_to root_path, notice: t('.sign_in')
       else
         redirect_to root_path, alert: "#{t('.error')}: #{user.errors.full_messages.join(', ')}"
@@ -36,6 +37,11 @@ module Web
         provider: auth['provider'],
         uid: auth['uid']
       }
+    end
+
+    def prefetch_repos
+      fetch_repositories = ApplicationContainer[:fetch_repositories_service].new(current_user)
+      ApplicationContainer[:fetch_repositories_job].perform_later(current_user) unless fetch_repositories.exists?
     end
   end
 end

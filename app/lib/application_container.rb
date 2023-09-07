@@ -14,6 +14,8 @@ class ApplicationContainer
     end
   end
   register :repository_check_job, -> { RepositoryCheckJob }
+  register :fetch_repositories_job, -> { FetchRepositoriesJob }
+  register :fetch_repositories_service, -> { FetchRepositoriesService }
 
   if Rails.env.test?
     autoload :Stubs, Rails.root.join('app/lib/stubs')

@@ -21,6 +21,7 @@ class RepositoryCheckService
 
     @check.mark_as_finish!
     CheckMailer.with(check: @check).check_with_offenses.deliver_later if @check.offense_count.positive?
+
     true
   ensure
     FileUtils.rmtree(@repository.directory)

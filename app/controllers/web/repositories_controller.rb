@@ -48,10 +48,9 @@ module Web
     end
 
     def fetch_repos
-      allowed_languages = Repository.language.values
-      octokit(current_user).repos
-                           .select { allowed_languages.include?(_1[:language]&.downcase) }
-                           .map(&:to_h)
+      fetch_repositories = ApplicationContainer[:fetch_repositories_service].new(current_user)
+      fetch_repositories.perform
+      fetch_repositories.repositories
     end
 
     def cached_fetch_repos
