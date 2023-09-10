@@ -30,10 +30,10 @@ class LintJavascriptService
 
   def find_config
     repository_config = "#{@repository.directory}/.eslintrc"
-    ext = %w[js json yml].find { File.exist?("#{repository_config}.#{_1}") }
-    return unless ext
+    extension = %w[js json yml].find { File.exist?("#{repository_config}.#{_1}") }
+    return unless extension
 
-    "#{repository_config}.#{ext}"
+    "#{repository_config}.#{extension}"
   end
 
   def lint_options
