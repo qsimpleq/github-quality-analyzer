@@ -1,6 +1,6 @@
 [
   {
-    "filePath": "/home/user1/Hexlet/rails-project-66/tmp/repositories/user1/hello-world-js/src/index.js",
+    "filePath": "/home/user1/Hexlet/github-quality-analyzer/tmp/repositories/user1/hello-world-js/src/index.js",
     "messages": [],
     "suppressedMessages": [],
     "errorCount": 0,
@@ -12,7 +12,7 @@
     ]
   },
   {
-    "filePath": "/home/user1/Hexlet/rails-project-66/tmp/repositories/user1/hello-world-js/test/index.js",
+    "filePath": "/home/user1/Hexlet/github-quality-analyzer/tmp/repositories/user1/hello-world-js/test/index.js",
     "messages": [],
     "suppressedMessages": [],
     "errorCount": 0,

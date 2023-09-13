@@ -1,6 +1,6 @@
 ### Hexlet tests and linter status:
-[![Actions Status](https://github.com/qsimpleq/rails-project-66/workflows/hexlet-check/badge.svg)](https://github.com/qsimpleq/rails-project-66/actions)
-[![CI](https://github.com/qsimpleq/rails-project-66/actions/workflows/ci.yml/badge.svg)](https://github.com/qsimpleq/rails-project-66/actions/workflows/ci.yml)
+[![Actions Status](https://github.com/qsimpleq/github-quality-analyzer/workflows/hexlet-check/badge.svg)](https://github.com/qsimpleq/github-quality-analyzer/actions)
+[![CI](https://github.com/qsimpleq/github-quality-analyzer/actions/workflows/ci.yml/badge.svg)](https://github.com/qsimpleq/github-quality-analyzer/actions/workflows/ci.yml)
 
 # Github Repository Quality Analyzer
 
